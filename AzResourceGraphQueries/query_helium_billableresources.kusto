@@ -5,7 +5,7 @@
 // This query uses "count" instead of "summarize" to count the number of records returned.
 // The '~' in the 'type' match tells Resource Graph to be case insensitive
 Resources
-| where subscriptionId == "6b4f88b2-db99-43b7-8cae-88444a230474"
+| where subscriptionId == "6b4f88b2-db99-43b7-8cae-88444a230474" //production sub selected
 | where type in~ ('microsoft.logic/workflows',
                 'microsoft.eventgrid/topics',
                 'microsoft.servicebus/namespaces',

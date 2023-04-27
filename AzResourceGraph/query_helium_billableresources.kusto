@@ -1,0 +1,22 @@
+// Click the "Run query" command above to execute the query and see results.
+// Count key vault resources
+// Returns number of key vault resources that exist in the subscriptions that you have access to.
+// 
+// This query uses "count" instead of "summarize" to count the number of records returned.
+// The '~' in the 'type' match tells Resource Graph to be case insensitive
+
+Resources
+| where subscriptionId == "6b4f88b2-db99-43b7-8cae-88444a230474"
+| where type in~ ('microsoft.logic/workflows',
+                'microsoft.eventgrid/topics',
+                'microsoft.servicebus/namespaces',
+                'microsoft.documentdb/databaseaccounts',
+                'microsoft.web/sites',
+                'microsoft.KeyVault/vaults',
+                'microsoft.Sql/servers/databases',
+                'microsoft.Storage/storageAccounts',
+                'microsoft.apimanagement/service',
+                'microsoft.apimanagement/service/apis',
+                'microsoft.apimanagement/service/apis/operations')
+| order by ['type'] asc
+| summarize dcount(name) by type

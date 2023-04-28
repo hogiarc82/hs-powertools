@@ -5,12 +5,12 @@ $storageAccounts = Get-AzResource -ResourceType 'Microsoft.Storage/storageAccoun
 foreach ($storageAccount in $storageAccounts) {
     
     # Get the storage account key (extracts the primary key)
-    $saKey = (Get-AzStorageAccountKey -ResourceGroupName $storageAccount.ResourceGroupName -Name $storageAccount.Name).Value[0]
+    ##$saKey = (Get-AzStorageAccountKey -ResourceGroupName $storageAccount.ResourceGroupName -Name $storageAccount.Name).Value[0]
     # Create a storage context (service-principal object)
-    $saContext = New-AzStorageContext -StorageAccountName $storageAccount.Name -StorageAccountKey $saKey
+    ##$saContext = New-AzStorageContext -StorageAccountName $storageAccount.Name -StorageAccountKey $saKey
 
     # Get the storage service properties for blobs
-    $saProp = Get-AzStorageServiceProperty -ServiceType Blob -Context $saContext
+    ##$saProp = Get-AzStorageServiceProperty -ServiceType Blob -Context $saContext
 
     # Get the extended storage service properties
     $saPropEx = Get-AzStorageBlobServiceProperty -ResourceGroupName $storageAccount.ResourceGroupName -AccountName $storageAccount.Name

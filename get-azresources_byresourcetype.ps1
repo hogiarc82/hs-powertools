@@ -7,8 +7,6 @@ foreach ($item in $itemArray) {
     $resourceTypes += $item
     Write-Host "Added: "$item
 }
-Write-Host "Total count in array: "$resourceTypes.Count
-Read-Host -Prompt "Continue? Press any key"
 
 $subscriptionId = Read-Host "Enter a valid Azure subscriptionId"
 $subscription = Get-AzSubscription -SubscriptionId $subscriptionId

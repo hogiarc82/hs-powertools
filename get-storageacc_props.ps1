@@ -53,4 +53,4 @@ foreach ($storageAccount in $storageAccounts) {
 }
 
 # Write the final table to a formated xls-file
-$saUsage | Export-Excel -Path ".\PSOutputFiles\ListStorageAccProps.xlsx" -WorksheetName "$StorageAccountDetails.SubscriptionName" -TableName "ExportedTable"
+$saUsage | Export-Excel -Path ".\PSOutputFiles\StorageAccProps.xlsx" -WorksheetName $Context.Subscription.Name -TableName "ExportedStorageAcc"

@@ -1,56 +1,79 @@
 Import-Module Az.Storage
-
 $context = Get-AzContext
-# get the current Azure context scope then ask user to confirm
-Write-Host "Your current subscription is:"$context.Subscription.Name
-Read-Host "Press any key to run the script in this context (Ctrl+C to abort)"
 
-# retrive all the storage accounts in the subscription
-$storageAccounts = Get-AzResource -ResourceType 'Microsoft.Storage/storageAccounts'
-
-# create an array to store all the storage accounts
-[System.Collections.ArrayList]$saUsage = New-Object -TypeName System.Collections.ArrayList
-
-# do the following for each storage account in the array (collection)
-foreach ($storageAccount in $storageAccounts) {
-    
-    # Try to fetch the storage account key (extracts the primary key)
-    try {
-        $saKey = Get-AzStorageAccountKey -ResourceGroupName $storageAccount.ResourceGroupName -Name $storageAccount.Name
-    } 
-    catch {
-        Write-Error "Not able to retrive the Storage Account key at this time."
-        break;
-    }
-
-    # Create a new storage context using the primary SA key
-    $saContext = New-AzStorageContext -StorageAccountName $storageAccount.Name -StorageAccountKey $saKey[0].value
-
-    # Read all of the storage account properties and structure them into objects
-    $saProp = Get-AzStorageServiceProperty -ServiceType Blob -Context $saContext
-
-    $StorageAccountDetails = [ordered]@{
-        SubscriptionName      = $context.Subscription.Name
-        # SubscrpitionID        = $context.Subscription.Id
-        StorageAccountName    = $storageAccount.Name
-        ResourceGroup         = $storageAccount.ResourceGroupName
-        Location              = $storageAccount.Location
-        AllowPermDelete       = $saProp.DeleteRetentionPolicy.AllowPermanentDelete 
-        DeleteRetentionPolicy = $saProp.DeleteRetentionPolicy.Enabled       
-        DeleteRetentionInDays = $saProp.DeleteRetentionPolicy.RetentionDays
-        # DeleteRetentionPolicy = $saProp.DeleteRetentionPolicy.Enabled
-        # RetentionPolicyDays   = $saProp.DeleteRetentionPolicy.Days
-        # MinRestoreTime        = $saProp.RestorePolicy.MinRestoreTime
-        ChangedFeedEnabled    = $saProp.ChangeFeed.Enabled
-        ChangeFeedRetention   = $saProp.ChangeFeed.RetentionInDays
-        VersioningEnabled     = $saProp.IsVersioningEnabled
-        LoggingOperations     = $saProp.Logging.LoggingOperations           
-        LogRetentionDays      = $saProp.Logging.RetentionDays               
-    }
-    
-    # Add each object as a row into the new PSObject serving as the table to output
-    $saUsage.add((New-Object psobject -Property $StorageAccountDetails)) | Out-Null
+Write-Host -ForegroundColor Yellow "Your current subscription is"$context.Subscription.Name
+Write-Host "Depending on your current role the access levels will vary."
+$key = Read-Host "- Do you want to run the script in this context? (Y/n)"
+if ($key -ne "Y") {
+    return
 }
 
-# Write the final table to a formated xls-file
-$saUsage | Export-Excel -Path ".\PSOutputFiles\StorageAccProps.xlsx" -WorksheetName $Context.Subscription.Name -TableName "ExportedStorageAcc"
+Write-Host "OK.. Executing script." -ForegroundColor Green
+#define a function to build the table from specified input objects
+function New-StorageAccountDetails {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [System.Object] $obj
+    )
+    # construct each row with the SA properties (data fields)
+    $saProperties = [ordered] @{
+        SubscriptionName      = $context.Subscription.Name
+        StorageAccount        = $obj.StorageAccountName
+        ResourceGroup         = $obj.ResourceGroupName
+        RestorePolicy         = $obj.RestorePolicy.Enabled
+        RestorePolicyDays     = $obj.RestorePolicy.Days
+        MinRestoreTime        = $obj.RestorePolicy.MinRestoreTime
+        RetentionPolicyDays   = $obj.DeleteRetentionPolicy.Days
+        DeleteRetentionPolicy = $obj.DeleteRetentionPolicy.Enabled
+        DeleteRetentionInDays = $obj.DeleteRetentionPolicy.RetentionDays
+        AllowPermDelete       = $obj.DeleteRetentionPolicy.AllowPermanentDelete
+        ChangedFeedEnabled    = $obj.ChangeFeed.Enabled
+        ChangeFeedRetention   = $obj.ChangeFeed.RetentionInDays
+        VersioningEnabled     = $obj.IsVersioningEnabled
+        LoggingOperations     = $obj.Logging.LoggingOperations           
+        LogRetentionDays      = $obj.Logging.RetentionDays
+    }
+    return (New-Object PSObject -Property $saProperties)
+}
+
+# step 1: retrive all the storage accounts in the current subscription
+## $storageAccounts = Get-AzResource -ResourceType 'Microsoft.Storage/storageAccounts'
+$storageAccounts = Get-AzStorageAccount
+# create an array to store the extended storage account property details
+[System.Collections.ArrayList]$list = New-Object -TypeName System.Collections.ArrayList
+
+# step 2: retrive the storage account properties and add fields to each row
+Write-Host "Processing storage accounts..." -ForegroundColor Yellow
+foreach ($sa in $storageAccounts) {
+    # skip storage accounts that belong to a webjob or function
+    if ($sa.StorageAccountName -notlike "webjob*") {
+        Write-Host "Loading"$sa.StorageAccountName -NoNewline
+        $props = New-StorageAccountDetails(Get-AzStorageBlobServiceProperty -StorageAccount $sa)
+        $props | Add-Member -MemberType NoteProperty -Name 'Version' -Value $sa.Kind
+        $props | Add-Member -MemberType NoteProperty -Name 'AccessTier' -Value $sa.AccessTier
+        $props | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
+        $props | Add-Member -MemberType NoteProperty -Name 'ReplicaType' -Value $sa.SkuName
+        $props | Add-Member -MemberType NoteProperty -Name 'ReplicatedTo' -Value $sa.SecondaryLocation 
+        $props | Add-Member -MemberType NoteProperty -Name 'PublicNetwork' -Value $sa.PublicNetworkAccess
+        $props | Add-Member -MemberType NoteProperty -Name 'PublicAccess' -Value $sa.AllowBlobPublicAccess
+        $props | Add-Member -MemberType NoteProperty -Name 'AllowSharedKey' -Value $sa.AllowSharedKeyAccess
+        $props | Add-Member -MemberType NoteProperty -Name 'AllowCrossTenant' -Value $sa.AllowCrossTenantReplication
+        #$t = $storageAccounts | Where-Object -Property Name -EQ $i.StorageAccountName | Select-Object Tags
+        #$props | Add-Member -MemberType NoteProperty -Name 'Tags' -Value $t.Tags.ToString()
+        $list.Add($props) | Out-Null
+        Write-Host " ...OK!" -ForegroundColor White
+    }
+}
+
+# Output the entire table to an excel file (include full filepath and extension)
+$path = ".\PSOutputFiles\StorageAccProps.xlsx"
+try {
+    $list | Export-Excel -Path $path -WorksheetName "ExtendedProperties" -TableName "storageprops" -AutoSize
+} catch {
+    Write-Error $_.Exception.GetType().FullName
+    Write-Error "Reason: Did you close the Excel file?"
+    return
+} finally {
+    Write-Host "Script finished successfully!" -ForegroundColor Green
+}

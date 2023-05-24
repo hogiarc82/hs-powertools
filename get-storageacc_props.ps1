@@ -59,12 +59,18 @@ foreach ($sa in $storageAccounts) {
         $props | Add-Member -MemberType NoteProperty -Name 'PublicAccess' -Value $sa.AllowBlobPublicAccess
         $props | Add-Member -MemberType NoteProperty -Name 'AllowSharedKey' -Value $sa.AllowSharedKeyAccess
         $props | Add-Member -MemberType NoteProperty -Name 'AllowCrossTenant' -Value $sa.AllowCrossTenantReplication
+        
+        ## TODO: Fix some additional properties, like tags and other useful info
         #$t = $storageAccounts | Where-Object -Property Name -EQ $i.StorageAccountName | Select-Object Tags
         #$props | Add-Member -MemberType NoteProperty -Name 'Tags' -Value $t.Tags.ToString()
         $list.Add($props) | Out-Null
         Write-Host " ...OK!" -ForegroundColor White
     }
 }
+$skipped = $storageAccounts.Count-$list.Count
+$totals = $storageAccounts.Count-$skipped
+Write-Host "Total number of storage accounts processed:"$totals
+Write-Host "(Skipped:"$skipped")"
 
 # Output the entire table to an excel file (include full filepath and extension)
 $path = ".\PSOutputFiles\StorageAccProps.xlsx"
@@ -72,7 +78,7 @@ try {
     $list | Export-Excel -Path $path -WorksheetName "ExtendedProperties" -TableName "storageprops" -AutoSize
 } catch {
     Write-Error $_.Exception.GetType().FullName
-    Write-Error "Reason: Did you close the Excel file?"
+    Write-Error "Possible reason: Do you have the Excel file open?"
     return
 } finally {
     Write-Host "Script finished successfully!" -ForegroundColor Green

@@ -24,15 +24,14 @@ function New-StorageAccountDetails {
         RestorePolicy         = $obj.RestorePolicy.Enabled
         RestorePolicyDays     = $obj.RestorePolicy.Days
         MinRestoreTime        = $obj.RestorePolicy.MinRestoreTime
+        #DeleteRetentionInDays = $obj.DeleteRetentionPolicy.RetentionDays
         RetentionPolicyDays   = $obj.DeleteRetentionPolicy.Days
         DeleteRetentionPolicy = $obj.DeleteRetentionPolicy.Enabled
-        DeleteRetentionInDays = $obj.DeleteRetentionPolicy.RetentionDays
         AllowPermDelete       = $obj.DeleteRetentionPolicy.AllowPermanentDelete
         ChangedFeedEnabled    = $obj.ChangeFeed.Enabled
-        ChangeFeedRetention   = $obj.ChangeFeed.RetentionInDays
         VersioningEnabled     = $obj.IsVersioningEnabled
-        LoggingOperations     = $obj.Logging.LoggingOperations           
-        LogRetentionDays      = $obj.Logging.RetentionDays
+        #LoggingOperations     = $obj.Logging.LoggingOperations           
+        #LogRetentionDays      = $obj.Logging.RetentionDays
     }
     return (New-Object PSObject -Property $saProperties)
 }
@@ -68,8 +67,7 @@ foreach ($sa in $storageAccounts) {
     }
 }
 $skipped = $storageAccounts.Count-$list.Count
-$totals = $storageAccounts.Count-$skipped
-Write-Host "Total number of storage accounts processed:"$totals
+Write-Host "Total number of storage accounts processed:"$list.Count
 Write-Host "(Skipped:"$skipped")"
 
 # Output the entire table to an excel file (include full filepath and extension)
@@ -81,5 +79,5 @@ try {
     Write-Error "Possible reason: Do you have the Excel file open?"
     return
 } finally {
-    Write-Host "Script finished successfully!" -ForegroundColor Green
+    Write-Host "Script finished successfully! Results can be found in the .\PSOutputFiles folder" -ForegroundColor Green
 }

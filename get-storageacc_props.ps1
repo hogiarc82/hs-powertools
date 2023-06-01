@@ -1,77 +1,111 @@
+<# 
+Script created by Román Castro for use with the Azure CLI (or PowerShell ver 5+)
+################################################################################
+# THIS SCRIPT DOES NOT CHANGE ANY PROPERTIES NOR PARAMETERS IN THE ENVIRONMENT #
+################################################################################
+Last modified: 2023-05-31 by roman.castro
+(Co-authored with ChatGPT and Bing Chat)
+
+#>
+
 Import-Module Az.Storage
 $context = Get-AzContext
 
 Write-Host -ForegroundColor Yellow "Your current subscription is"$context.Subscription.Name
-Write-Host "Depending on your current role the access levels will vary."
-$key = Read-Host "- Do you want to run the script in this context? (Y/n)"
+Write-Host "You need to run this script with the appropriate environment read-access!" -ForegroundColor Cyan
+$key = Read-Host "- Do you want to continue to run the script in this context? (Y/n)"
 if ($key -ne "Y") {
     return
 }
+Write-Host "============ COMMAND ACCEPTED - Executing Script ============" -ForegroundColor Green
 
-Write-Host "OK.. Executing script." -ForegroundColor Green
-#define a function to build the table from specified input objects
-function New-StorageAccountDetails {
+#user defined function that takes a StorageBlobServiceProperty as input
+function New-ExtendedStorageProps {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]
         [System.Object] $obj
     )
-    # construct each row with the SA properties (data fields)
+    Write-Host "." -NoNewline
+
+    # create new fields with the input from the extended storage properties data
     $saProperties = [ordered] @{
-        SubscriptionName      = $context.Subscription.Name
-        StorageAccount        = $obj.StorageAccountName
-        ResourceGroup         = $obj.ResourceGroupName
+        AllowPermDelete       = $obj.DeleteRetentionPolicy.AllowPermanentDelete
+        DeleteRetentionPolicy = $obj.DeleteRetentionPolicy.Enabled
+        RetentionPolicyDays   = $obj.DeleteRetentionPolicy.Days
         RestorePolicy         = $obj.RestorePolicy.Enabled
         RestorePolicyDays     = $obj.RestorePolicy.Days
-        MinRestoreTime        = $obj.RestorePolicy.MinRestoreTime
-        #DeleteRetentionInDays = $obj.DeleteRetentionPolicy.RetentionDays
-        RetentionPolicyDays   = $obj.DeleteRetentionPolicy.Days
-        DeleteRetentionPolicy = $obj.DeleteRetentionPolicy.Enabled
-        AllowPermDelete       = $obj.DeleteRetentionPolicy.AllowPermanentDelete
         ChangedFeedEnabled    = $obj.ChangeFeed.Enabled
         VersioningEnabled     = $obj.IsVersioningEnabled
+        #MinRestoreTime        = $obj.RestorePolicy.MinRestoreTime
         #LoggingOperations     = $obj.Logging.LoggingOperations           
         #LogRetentionDays      = $obj.Logging.RetentionDays
     }
     return (New-Object PSObject -Property $saProperties)
 }
-
-# step 1: retrive all the storage accounts in the current subscription
-## $storageAccounts = Get-AzResource -ResourceType 'Microsoft.Storage/storageAccounts'
-$storageAccounts = Get-AzStorageAccount
-# create an array to store the extended storage account property details
+# create a list to store the final storage account properties as a "table"
 [System.Collections.ArrayList]$list = New-Object -TypeName System.Collections.ArrayList
 
-# step 2: retrive the storage account properties and add fields to each row
-Write-Host "Processing storage accounts..." -ForegroundColor Yellow
+Write-Host "Retrieving and processing storage account properties..."
+$storageAccounts = Get-AzStorageAccount
+
 foreach ($sa in $storageAccounts) {
-    # skip storage accounts that belong to a webjob or function
+    # skip storage accounts that belong to webjobs
     if ($sa.StorageAccountName -notlike "webjob*") {
         Write-Host "Loading"$sa.StorageAccountName -NoNewline
-        $props = New-StorageAccountDetails(Get-AzStorageBlobServiceProperty -StorageAccount $sa)
-        $props | Add-Member -MemberType NoteProperty -Name 'Version' -Value $sa.Kind
-        $props | Add-Member -MemberType NoteProperty -Name 'AccessTier' -Value $sa.AccessTier
-        $props | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
-        $props | Add-Member -MemberType NoteProperty -Name 'ReplicaType' -Value $sa.SkuName
-        $props | Add-Member -MemberType NoteProperty -Name 'ReplicatedTo' -Value $sa.SecondaryLocation 
-        $props | Add-Member -MemberType NoteProperty -Name 'PublicNetwork' -Value $sa.PublicNetworkAccess
-        $props | Add-Member -MemberType NoteProperty -Name 'PublicAccess' -Value $sa.AllowBlobPublicAccess
-        $props | Add-Member -MemberType NoteProperty -Name 'AllowSharedKey' -Value $sa.AllowSharedKeyAccess
-        $props | Add-Member -MemberType NoteProperty -Name 'AllowCrossTenant' -Value $sa.AllowCrossTenantReplication
         
-        ## TODO: Fix some additional properties, like tags and other useful info
-        #$t = $storageAccounts | Where-Object -Property Name -EQ $i.StorageAccountName | Select-Object Tags
-        #$props | Add-Member -MemberType NoteProperty -Name 'Tags' -Value $t.Tags.ToString()
-        $list.Add($props) | Out-Null
-        Write-Host " ...OK!" -ForegroundColor White
+        # create like a "table row"
+        $row = New-Object PSObject
+        
+        # add basic primary fields as new columns
+        $row | Add-Member -MemberType NoteProperty -Name 'Subscription' -Value $context.Subscription.Name
+        $row | Add-Member -MemberType NoteProperty -Name 'StorageAccount' -Value $sa.StorageAccountName
+        $row | Add-Member -MemberType NoteProperty -Name 'ResouceGroup' -Value $sa.ResourceGroupName
+
+        #retrieve the storage account tags (only relevant ones)
+        $acceptKeys = "company", "team"
+        foreach ($key in $sa.Tags.Keys) {
+            $value = $sa.Tags[$key]
+            if ($key -in $acceptKeys) {
+                $row | Add-Member -MemberType NoteProperty -Name $key -Value $value
+            }
+        }
+
+        #add additional storage account properties (as many as you like)
+        $row | Add-Member -MemberType NoteProperty -Name 'Type' -Value $sa.Kind
+        $row | Add-Member -MemberType NoteProperty -Name 'AccessTier' -Value $sa.AccessTier
+        $row | Add-Member -MemberType NoteProperty -Name 'SKU' -Value $sa.Sku.Name
+        $row | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
+        $row | Add-Member -MemberType NoteProperty -Name 'ReplicatedIn' -Value $sa.SecondaryLocation
+
+        #call custom defined function to retrieve the extended properties
+        $ext = New-ExtendedStorageProps(Get-AzStorageBlobServiceProperty -StorageAccount $sa)
+        $ext.PSObject.Properties | ForEach-Object {
+            $row | Add-Member -MemberType NoteProperty -Name $_.Name -Value $_.Value
+        }
+ 
+        # add property field related to network access and security boundaries
+        $row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess
+        $row | Add-Member -MemberType NoteProperty -Name 'BlobPublicAccess' -Value $sa.AllowBlobPublicAccess
+        $row | Add-Member -MemberType NoteProperty -Name 'AllowSharedKey' -Value $sa.AllowSharedKeyAccess
+        $row | Add-Member -MemberType NoteProperty -Name 'AllowCrossTenant' -Value $sa.AllowCrossTenantReplication
+
+        # join all fields into a table row
+        $list.Add($row) | Out-Null
+        Write-Host ".. OK"
     }
 }
-$skipped = $storageAccounts.Count-$list.Count
-Write-Host "Total number of storage accounts processed:"$list.Count
-Write-Host "(Skipped:"$skipped")"
+# tally how many storage accounts where skipped
+$skipCount = $storageAccounts.Count-$list.Count
+Write-Host $list.Count"storage accounts processed. ($skipCount skipped)" -ForegroundColor Yellow
 
-# Output the entire table to an excel file (include full filepath and extension)
+# Ensure that all the PSObjects in the ArrayList have the same set of properties (this is experimental and might not work)
+#$properties = $list | ForEach-Object { $_.PSObject.Properties.Name } | Select-Object -Unique
+#$arrayList = $arrayList | Select-Object $properties
+
+# Output table to excel file and display grid-view (make sure to include file-path and extension)
 $path = ".\PSOutputFiles\StorageAccProps.xlsx"
+
 try {
     $list | Export-Excel -Path $path -WorksheetName "ExtendedProperties" -TableName "storageprops" -AutoSize
 } catch {
@@ -79,5 +113,6 @@ try {
     Write-Error "Possible reason: Do you have the Excel file open?"
     return
 } finally {
-    Write-Host "Script finished successfully! Results can be found in the .\PSOutputFiles folder" -ForegroundColor Green
+    $list | Out-GridView -Title "StorageAccountProperties"
+    Write-Host "Script finished successfully! Excel-file can be found in the .\PSOutputFiles folder" -ForegroundColor Green
 }

@@ -17,7 +17,7 @@ $key = Read-Host "- Do you want to continue to run the script in this context? (
 if ($key -ne "Y") {
     return
 }
-Write-Host "============ COMMAND ACCEPTED - Executing Script ============" -ForegroundColor Green
+Write-Host "============= COMMAND ACCEPTED - Executing Script ============" -ForegroundColor Green
 
 #user defined function that takes a StorageBlobServiceProperty as input
 function New-ExtendedStorageProps {

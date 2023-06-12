@@ -5,6 +5,7 @@
 Last modified: 2023-05-31 by roman.castro
 (Co-authored with ChatGPT & Github Co-pilot)
 #>
+#Run if needed 
 #Import-Module Az.Storage
 
 Write-Host "============= Executing Script - Press Ctrl+C anytime to abort =============" -ForegroundColor Green
@@ -68,13 +69,14 @@ function New-ExtendedStorageProps {
 [System.Collections.ArrayList]$list = New-Object -TypeName System.Collections.ArrayList
 
 $context = Get-AzContext
-Write-Host -ForegroundColor Green "Your current subscription is:"$context.Subscription.Name
+Write-Host -ForegroundColor Cyan "The current subscription selected is:"$context.Subscription.Name
 Write-Host "This script requires the appropriate permissions within the environment" -ForegroundColor Yellow
 
 $key = Read-Host "- Do you want to continue to run the script in current context? (Y/n)"
 if ($key -ne "Y") {
+    Write-Host "Loading selection menu..."
     $selection = New-PromptSelection
-    Set-AzContext -Subscription $selection.Id
+    $context = Set-AzContext -Subscription $selection.Id
 }
 
 $storageAccounts = Get-AzStorageAccount
@@ -107,7 +109,7 @@ foreach ($sa in $storageAccounts) {
         $row | Add-Member -MemberType NoteProperty -Name 'AccessTier' -Value $sa.AccessTier
         $row | Add-Member -MemberType NoteProperty -Name 'SKU' -Value $sa.Sku.Name
         $row | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
-        $row | Add-Member -MemberType NoteProperty -Name 'ReplicatedIn' -Value $sa.SecondaryLocation
+        ##$row | Add-Member -MemberType NoteProperty -Name 'GeoReplicatedIn' -Value $sa.SecondaryLocation
         Write-Host "." -NoNewline
 
         #call custom defined function to retrieve the extended properties

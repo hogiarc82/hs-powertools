@@ -1,24 +1,45 @@
-<# 
-Script created by Román Castro for use with the Azure CLI (or PowerShell ver 5+)
-################################################################################
-# THIS SCRIPT DOES NOT CHANGE ANY PROPERTIES NOR PARAMETERS IN THE ENVIRONMENT #
-################################################################################
+<#
+##############################################################################
+# THIS SCRIPT WILL NOT CHANGE ANY SYSTEM PROPERTIES IN YOUR PROD ENVIRONMENT #
+##############################################################################
 Last modified: 2023-05-31 by roman.castro
-(Co-authored with ChatGPT and Bing Chat)
-
+(Co-authored with ChatGPT & Github Co-pilot)
 #>
+#Import-Module Az.Storage
 
-Import-Module Az.Storage
-$context = Get-AzContext
+Write-Host "============= Executing Script - Press Ctrl+C anytime to abort =============" -ForegroundColor Green
+function New-PromptSelection {
+    param ()
+    $i = 0; 
+    # Create an array list and populate with subscription titles 
+    $subscriptions = New-Object System.Collections.ArrayList
+    foreach ($line in Get-AzSubscription | Select-Object Name, Id) {
+        $line | Add-Member NoteProperty -Name Index -Value $i
+        $subscriptions.Add($line) | Out-Null
+        $i++
+    }
 
-Write-Host -ForegroundColor Yellow "Your current subscription is"$context.Subscription.Name
-Write-Host "You need to run this script with the appropriate environment read-access!" -ForegroundColor Cyan
-$key = Read-Host "- Do you want to continue to run the script in this context? (Y/n)"
-if ($key -ne "Y") {
-    return
+    # Create options for the user to select from
+    $options = [System.Management.Automation.Host.ChoiceDescription[]]($subscriptions | ForEach-Object {
+            $label = "&$($_.Index) $($_.Name) | "
+            New-Object System.Management.Automation.Host.ChoiceDescription $label, $_.Name
+        })
+
+    # Display verbose output for debugging
+    # Write-Verbose "Options:"
+    # foreach ($option in $options) {
+    #     Write-Verbose "Label: $($option.Label)"
+    #     Write-Verbose "HelpMessage: $($option.HelpMessage)"
+    # }
+
+    # Prompt the user to select a subscription
+    $title = "=========== USER INPUT REQUIRED ==========="
+    $message = "Please select a subscription from the list:"
+    $selectedSubscriptionIndex = $host.ui.PromptForChoice($title, $message, $options, -1)
+
+    # Return the selected subscription
+    return $subscriptions[$selectedSubscriptionIndex]
 }
-Write-Host "============= COMMAND ACCEPTED - Executing Script ============" -ForegroundColor Green
-
 #user defined function that takes a StorageBlobServiceProperty as input
 function New-ExtendedStorageProps {
     [CmdletBinding()]
@@ -26,7 +47,6 @@ function New-ExtendedStorageProps {
         [Parameter(Mandatory=$true)]
         [System.Object] $obj
     )
-    Write-Host "." -NoNewline
 
     # create new fields with the input from the extended storage properties data
     $saProperties = [ordered] @{
@@ -41,14 +61,24 @@ function New-ExtendedStorageProps {
         #LoggingOperations     = $obj.Logging.LoggingOperations           
         #LogRetentionDays      = $obj.Logging.RetentionDays
     }
+    Write-Host "." -NoNewline
     return (New-Object PSObject -Property $saProperties)
 }
 # create a list to store the final storage account properties as a "table"
 [System.Collections.ArrayList]$list = New-Object -TypeName System.Collections.ArrayList
 
-Write-Host "Retrieving and processing storage account properties..."
-$storageAccounts = Get-AzStorageAccount
+$context = Get-AzContext
+Write-Host -ForegroundColor Green "Your current subscription is:"$context.Subscription.Name
+Write-Host "This script requires the appropriate permissions within the environment" -ForegroundColor Yellow
 
+$key = Read-Host "- Do you want to continue to run the script in current context? (Y/n)"
+if ($key -ne "Y") {
+    $selection = New-PromptSelection
+    Set-AzContext -Subscription $selection.Id
+}
+
+$storageAccounts = Get-AzStorageAccount
+Write-Host "Retrieving and processing storage account properties..."
 foreach ($sa in $storageAccounts) {
     # skip storage accounts that belong to webjobs
     if ($sa.StorageAccountName -notlike "webjob*") {
@@ -61,6 +91,7 @@ foreach ($sa in $storageAccounts) {
         $row | Add-Member -MemberType NoteProperty -Name 'Subscription' -Value $context.Subscription.Name
         $row | Add-Member -MemberType NoteProperty -Name 'StorageAccount' -Value $sa.StorageAccountName
         $row | Add-Member -MemberType NoteProperty -Name 'ResouceGroup' -Value $sa.ResourceGroupName
+        Write-Host "." -NoNewline
 
         #retrieve the storage account tags (only relevant ones)
         $acceptKeys = "company", "team"
@@ -77,6 +108,7 @@ foreach ($sa in $storageAccounts) {
         $row | Add-Member -MemberType NoteProperty -Name 'SKU' -Value $sa.Sku.Name
         $row | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
         $row | Add-Member -MemberType NoteProperty -Name 'ReplicatedIn' -Value $sa.SecondaryLocation
+        Write-Host "." -NoNewline
 
         #call custom defined function to retrieve the extended properties
         $ext = New-ExtendedStorageProps(Get-AzStorageBlobServiceProperty -StorageAccount $sa)
@@ -92,16 +124,22 @@ foreach ($sa in $storageAccounts) {
 
         # join all fields into a table row
         $list.Add($row) | Out-Null
-        Write-Host ".. OK"
+        Write-Host " OK "
     }
 }
-# tally how many storage accounts where skipped
+# Count how many storage accounts where skipped
 $skipCount = $storageAccounts.Count-$list.Count
 Write-Host $list.Count"storage accounts processed. ($skipCount skipped)" -ForegroundColor Yellow
 
 # Ensure that all the PSObjects in the ArrayList have the same set of properties (this is experimental and might not work)
 #$properties = $list | ForEach-Object { $_.PSObject.Properties.Name } | Select-Object -Unique
 #$arrayList = $arrayList | Select-Object $properties
+
+$key = Read-Host "- Save output to an Excel file? Choose no to only show the gridview (Y/n)"
+if ($key -ne "Y") {
+    $list | Out-GridView -Title "StorageAccountProperties"
+    return
+}
 
 # Output table to excel file and display grid-view (make sure to include file-path and extension)
 $path = ".\PSOutputFiles\StorageAccProps.xlsx"
@@ -114,5 +152,5 @@ try {
     return
 } finally {
     $list | Out-GridView -Title "StorageAccountProperties"
-    Write-Host "Script finished successfully! Excel-file can be found in the .\PSOutputFiles folder" -ForegroundColor Green
+    Write-Host "Script finished successfully. Output can be found under the \PSOutputFiles folder" -ForegroundColor Green
 }

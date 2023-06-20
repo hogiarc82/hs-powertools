@@ -72,8 +72,8 @@ function New-ExtendedStorageProps {
 
 $context = Get-AzContext
 # call Azure RM and return information about current context to operate
-Write-Host -ForegroundColor Yellow "The current subscription selected is:"$context.Subscription.Name
-Write-Host "This script requires the appropriate permissions within the environment" -ForegroundColor Cyan
+Write-Host -ForegroundColor Yellow "The current subscription is:"$context.Subscription.Name
+Write-Host "NB! This script requires the appropriate permissions" -ForegroundColor Cyan
 
 # present user a choice to either continue with current context or select a new
 $key = Read-Host "- Do you want to continue to run the script in current context? (Y/n)"
@@ -81,14 +81,15 @@ if ($key -ne "Y") {
     Write-Host "Loading selection menu..." -ForegroundColor Yellow
     $selection = New-PromptSelection
     $context = Set-AzContext -Subscription $selection.Id
+    Write-Host "You have selected a new context:" $selection.Name -ForegroundColor Yellow
 }
 
 # return all available storage accounts in the selected subscription
 $storageAccounts = Get-AzStorageAccount
 Write-Host "Retrieving and processing storage account properties..."
 foreach ($sa in $storageAccounts) {
-    # skip all storage accounts that belong to webjobs
-    if ($sa.StorageAccountName -notlike "webjob*") {
+    # skip all storage accounts that belong to the cloud-shell, webjobs, etc.
+    if ($sa.StorageAccountName -notlike "webjob*" -and $sa.ResourceGroupName -notlike "cloud-shell-storage*") {
         Write-Host "Loading"$sa.StorageAccountName -NoNewline
         
         $row = New-Object PSObject
@@ -143,16 +144,20 @@ $key = Read-Host "- Save output to a file? Choose No to only show Gridview (Y/n)
 if ($key -eq "Y") {
         
     # Output table to excel file and display grid-view (make sure to include file-path and extension)
-    $path = ".\PSOutputFiles\StorageAccProps.xlsx"
+    $csvfile = ".\PSOutputFiles\StorageAccProps.csv"
+    #$xlsfile = ".\PSOutputFiles\StorageAccProps.xlsx"
 
     try {
-        $list | Export-Excel -Path $path -WorksheetName "ExtendedProperties" -TableName "storageprops" -AutoSize
+        Write-Host "Writing file to disk..."
+        list | Export-Csv -Path $csvfile -Delimiter ";" -Confirm
+        #$list | Export-Excel -Path $xlsfile -WorksheetName "ExtendedProperties" -TableName "storageprops" -AutoSize
+        Write-Host "Success! Output can be found under the \PSOutputFiles folder" -ForegroundColor Green
     } catch {
         Write-Error $_.Exception.GetType().FullName
-        Write-Host -ForegroundColor Yellow "Possible reason: Excel file already open? (locked)"
-        return
+        Write-Host -ForegroundColor Yellow "Possible reason: File already open? (locked)"
+        break
     } finally {
-        Write-Host "Script finished successfully. Output can be found under the \PSOutputFiles folder" -ForegroundColor Green
+        Write-Information "Script finished."
     }
 
 } else {

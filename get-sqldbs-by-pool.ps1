@@ -17,22 +17,6 @@ foreach ($database in $databases) {
         isZoneRedundant = $database.ZoneRedundant
     }
     $mytable += $obj
-
-    # $row = "" | Select-Object Database,ElasticPool,isZoneRedundant
-    # $row.Database = $($database.DatabaseName)
-
-    # if ($database.ElasticPoolName) {    
-    #     $row.ElasticPool = ($database.ElasticPoolName)
-    # }
-    # if ($database.ZoneRedundant) {
-    #     $row.isZoneRedundant = "TRUE"
-    # }
-    # else {
-    #     $row.isZoneRedundant = "FALSE"
-    # }
-
-    # # add the row to the table object
-    # $mytable += $row
 }
 
 # NB! Set the correct path to get the resulting output as an Excel file

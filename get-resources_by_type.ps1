@@ -1,10 +1,14 @@
+<# Experimental script for calling the Azure RM to return
+ the count of Azure resources based on a certain resource type
+#>
+
 $context = Get-AzContext
 Write-Host "Your current AzContext is:"$context.Subscription.Name
 
-$array = Read-Host "Enter a list of resource-types separated with commas"
-$itemArray = $array.Split(",")
+$array = Read-Host "Enter a (list of) resource-type(s) - separated by comma(s)"
+$list = $array.Split(",")
 
-foreach ($item in $itemArray) {
+foreach ($item in $list) {
     
     $item = $item.Trim("'","""")
 

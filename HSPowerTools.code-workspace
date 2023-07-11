@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "HSPowerTools",
+			"path": "."
+		}
+	],
+	"settings": {
+		"powershell.cwd": "c:\\Users\\roman.castro\\Source\\HSPowerTools",
+		"azureAutomation.directory.basePath": "c:\\Users\\roman.castro"
+	}
+}

@@ -3,7 +3,6 @@
 # NOTE: THIS SCRIPT WILL NOT CHANGE ANY SYSTEM PROPERTIES IN THE ENVIRONMENT #
 ##############################################################################
 Last modified: 2023-05-31 by roman.castro
-(Co-authored with ChatGPT & Co-pilot)
 #
 #>
 Clear-Host

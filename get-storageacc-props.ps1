@@ -88,7 +88,7 @@ foreach ($sa in $storageAccounts) {
         # adding fields to a table row with basic storage account properties
         $row | Add-Member -MemberType NoteProperty -Name 'Subscription' -Value $context.Subscription.Name
         $row | Add-Member -MemberType NoteProperty -Name 'StorageAccount' -Value $sa.StorageAccountName
-        $row | Add-Member -MemberType NoteProperty -Name 'ResouceGroup' -Value $sa.ResourceGroupName
+        $row | Add-Member -MemberType NoteProperty -Name 'ResourceGroup' -Value $sa.ResourceGroupName
 
         # retrieves storage account tags and adds them as fields (columns)
         $acceptKeys = "company", "team"

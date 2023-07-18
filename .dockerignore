@@ -8,6 +8,7 @@
 **/.toolstarget
 **/.vs
 **/.vscode
+**/.code-workspace
 **/*.*proj.user
 **/*.dbmdl
 **/*.jfm

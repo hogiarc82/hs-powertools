@@ -1,9 +1,53 @@
-## get a list of Azure subscriptions (that you have access to) and set AzContext
-Get-AzSubscription
+<#
+##############################################################################
+# NOTE: THIS SCRIPT WILL NOT CHANGE ANY SYSTEM PROPERTIES IN THE ENVIRONMENT #
+##############################################################################
+Last modified: 2023-05-31 by roman.castro
+#
+#>
 
-$subscriptionId = Read-Host -Prompt "Type in the SubscriptionID to execute this script in"
-Set-AzContext -Subscription $subscriptionId
+Write-Host "============= Executing Script - Press Ctrl+C anytime to abort =============" -ForegroundColor Green
 
-#Get-AzAppServicePlan
-#Get-AzWebApp 
+Import-Module Az.Storage
+
+<# A user defined function prompting user for selection from a custom menu #>
+function New-PromptSelection {
+    param ()
+    $i = 0; 
+    # Creates a list with all accessible Azure subscriptions 
+    $subscriptions = New-Object System.Collections.ArrayList
+    foreach ($line in Get-AzSubscription | Select-Object Name, Id) {
+        $line | Add-Member NoteProperty -Name Index -Value $i
+        $subscriptions.Add($line) | Out-Null
+        $i++
+    }
+
+    # Creates the option list for the user to select a subscription from
+    $options = [System.Management.Automation.Host.ChoiceDescription[]]($subscriptions | ForEach-Object {
+            $label = "&$($_.Index) $($_.Name) |"
+            New-Object System.Management.Automation.Host.ChoiceDescription $label, $_.Name
+        })
+
+    # Draws the console menu and prompts user for a selection
+    $title =   "Please select a subscription from the list"
+    $message = "=========================================="
+    $selectedSubscriptionIndex = $host.ui.PromptForChoice($title, $message, $options, -1)
+
+    # Returns the selected subscription
+    return $subscriptions[$selectedSubscriptionIndex]
+}
+<# A user defined function for reading the StorageBlobServiceProperty as input #>
+
+$selection = New-PromptSelection
+Write-Host $selection
+
+Set-AzContext -Subscription $selection.Id
+
+$serviceplans = Get-AzAppServicePlan
+foreach ($asp in $serviceplans) {
+    Get-AzWebApp -AppServicePlan $asp
+    ## Todo: Filter only app services with FTP setting still enabled
+}
+
 #Set-AzWebApp -Name app-name -ResourceGroupName group-name -FtpsState Disabled
+

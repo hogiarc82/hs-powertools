@@ -45,9 +45,11 @@ Set-AzContext -Subscription $selection.Id
 
 $serviceplans = Get-AzAppServicePlan
 foreach ($asp in $serviceplans) {
-    Get-AzWebApp -AppServicePlan $asp
-    ## Todo: Filter only app services with FTP setting still enabled
+    $apps = Get-AzWebApp -AppServicePlan $asp
+    
+    foreach ($app in $apps) {
+    
+    }
 }
-
 #Set-AzWebApp -Name app-name -ResourceGroupName group-name -FtpsState Disabled
 

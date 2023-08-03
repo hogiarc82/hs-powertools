@@ -1,84 +1,76 @@
-Subscription;StorageAccount;ResouceGroup;team;company;Type;AccessTier;SKU;Location;AllowPermDelete;DeleteRetentionPolicy;RetentionPolicyDays;RestorePolicy;RestorePolicyDays;ChangedFeedEnabled;VersioningEnabled;PublicNetAccess;BlobPublicAccess;AllowSharedKey;AllowCrossTenant
-Hogia Star - Production Environment;accinboxdocstorage;accountinginboxservice;Vintergatan;Hogia Business Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;35;True;30;True;True;;True;True;True
-Hogia Star - Production Environment;annualreportstore;HBP-STORAGE;HWASSBUK;Hogia Business Products AB;StorageV2;Hot;Standard_GRS;westeurope;False;True;35;True;30;True;True;;True;True;
-Hogia Star - Production Environment;bookaccclass;HBP-STORAGE;HWASSBUK;Hogia Business Products AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;bundlenotifstorage;bundlenotificationservice;Vintergatan;Hogia Business Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;30;True;29;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;customerinvoicestore;HBP-STORAGE;HWASSBUK;Hogia Business Products AB;StorageV2;Hot;Standard_GRS;westeurope;False;True;35;True;30;True;True;;True;;
-Hogia Star - Production Environment;einvoicebasware;vanservice;Altair;Hogia Business Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;30;True;25;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;einvoicecustomerinvoice;invoicedistributionservice;Altair;Hogia Business Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;35;True;30;True;True;;True;True;True
-Hogia Star - Production Environment;einvoicepeppol;vanservice;Altair;Hogia Business Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;35;True;30;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;einvoicesupplierinvoice;invoicedistributionservice;Altair;Hogia Business Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;35;True;30;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;einvoicetoazurefunc;invoicedistributionservice;Altair;Hogia Business Products AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;einvsupinfuncstorage;einvoicesupplierinvoicefunctions;Altair;Hogia Business Products AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;ekonomistarapi;ekonomistarapi;Solen;Hogia Business Products AB;StorageV2;Hot;Standard_GRS;westeurope;False;True;35;True;30;True;True;;True;True;
-Hogia Star - Production Environment;eservicesregfunctions;eservicesregistrationfunctions;Altair;Hogia Business Products AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;False;;False;False;Enabled;True;True;
-Hogia Star - Production Environment;fintransmatch;HBP-STORAGE;HWASSBUK;Hogia Business Products AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;migratehekdocuments;migratehekdocuments;Solen;Hogia Business Products AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;openbusinessstore;HBP-STORAGE;HWASSBUK;Hogia Business Products AB;StorageV2;Hot;Standard_GRS;westeurope;False;True;35;True;30;True;True;Enabled;True;;
-Hogia Star - Production Environment;pdfmergefunctionprod;pdfmergefunction;Altair;Hogia Business Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;31;True;30;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;supplierinvoicestore;HBP-STORAGE;Vintergatan;Hogia Business Products AB;StorageV2;Hot;Standard_GRS;westeurope;False;True;35;True;30;True;True;;True;;
-Hogia Star - Production Environment;voucherserviceprod;HBP-STORAGE;HWASSBUK;Hogia Business Products AB;StorageV2;Hot;Standard_GRS;westeurope;False;True;35;True;30;True;True;;True;;
-Hogia Star - Production Environment;companyinfoprod;companyinfo;Connect;Hogia Connect AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;35;True;30;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;companyinfoservice;companyinformationservice;Connect;Hogia Connect AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;creditsafefunctions;companyinfo;Connect;Hogia Connect AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;bureaufilestorage;ROR-STORAGE;DPS;Hogia Fastighetssystem AB;StorageV2;Hot;Standard_GRS;westeurope;False;True;35;True;30;True;True;;True;;
-Hogia Star - Production Environment;chattdocumentmigrate;ROR-STORAGE;DPS;Hogia Fastighetssystem AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;False;;False;False;;True;True;
-Hogia Star - Production Environment;dpsfunctionsstorage;dpsfunctions;DPS;Hogia Fastighetssystem AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;realestatefunctions;realestatefunctions;Fastighet;Hogia Fastighetssystem AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;realestatestorageprod;realestatesurvey;Fastighet;Hogia Fastighetssystem AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;30;False;;False;False;;True;True;
-Hogia Star - Production Environment;finditystore;findityintegration;Selleri;Hogia HR Systems AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;31;True;30;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;hlpfileservice;SA-VOConnect;Thyme;Hogia HR Systems AB;BlobStorage;Hot;Standard_GRS;westeurope;False;True;30;;;;;;True;;
-Hogia Star - Production Environment;hrdocumentservice;hrdocumentservice;Glory;Hogia HR Systems AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;35;True;30;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;hrexcelfunctionstore;HRS-STORAGE;Dexter;Hogia HR Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;False;;False;False;;True;True;
-Hogia Star - Production Environment;hrscomponentsstorage;hrscomponents;VoulezVous;Hogia HR Systems AB;StorageV2;Hot;Standard_ZRS;westeurope;False;False;;;;;;Enabled;True;;
-Hogia Star - Production Environment;mypayslipapi;mypayslipapi;VoulezVous;Hogia HR Systems AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;7;False;;False;False;;True;True;
-Hogia Star - Production Environment;pachangeactivator;pachangeactivatorfunction;Dexter;Hogia HR Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;
-Hogia Star - Production Environment;paymentrep;HRS-STORAGE;VoulezVous;Hogia HR Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;payrepmanv1;APP-HRS;VoulezVous;Hogia HR Systems AB;Storage;;Standard_LRS;westeurope;False;True;30;;;;;;True;;
-Hogia Star - Production Environment;pis2empmigfunction;pis2employmentmigrationfunction;Thyme;Hogia HR Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;35;False;;False;False;;True;True;True
-Hogia Star - Production Environment;stztlq6e5brmvag;hranalyticsservice;Glory;Hogia HR Systems AB;StorageV2;Hot;Standard_ZRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;updatewithdatastore;updatetrnswithdatafunction;Sigvard;Hogia HR Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;False;;False;False;;True;True;True
-Hogia Star - Production Environment;admincenterstorage;admincenter;ISP;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;True;
-Hogia Star - Production Environment;authorizationservice;AuthorizationService;ISP;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;;;;;;True;;
-Hogia Star - Production Environment;cmsstorageaccountprod;customermembershipservice;ISP;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;32;True;30;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;customermigrationstore;ISP-APP;ISP;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;False;;False;False;Enabled;True;True;True
-Hogia Star - Production Environment;idworker;idworker;ISP;Hogia Infrastructure Products AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;lassbotestarbicep2;lassbotestarbicep2;Developer Success;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;licensereportservice;ISP-APP;ISP;Hogia Infrastructure Products AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;reportconvertservice;HBP-STORAGE;ISP;Hogia Infrastructure Products AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;starhelathcheckfunction;ISP-APP;ISP;Hogia Infrastructure Products AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;stmojd57pbojqta;templatenetcorerest;Developer Success;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;stojqtm6sdhcslq;lassboojimmytestarbicepservice;Developer Success;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;templatenetcorerest;templatenetcorerest;Developer Success;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_ZRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;toolbarmessageservice;ISP;ISP;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;30;;;;;;True;;
-Hogia Star - Production Environment;usermembershipsetup;usermembershipsetupservice;ISP;Hogia Infrastructure Products AB;BlobStorage;Cool;Standard_GRS;westeurope;False;True;30;;;;;;True;;
-Hogia Star - Production Environment;cdnooacx3zcn3d2csq44x118;starcdn;ISP;Hogia Infrastructure Products AB;StorageV2;Hot;Standard_ZRS;swedencentral;False;True;30;True;14;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;isslogs;HS-LOG;Shared;Hogia Infrastructure Services AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;beastpullingfunction;HLS-APP;MoveIt;Hogia Logistics Systems AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;Enabled;True;;
-Hogia Star - Production Environment;connectedvehicle;connectedvehicle;MoveIt;Hogia Logistics Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;True;
-Hogia Star - Production Environment;hlsstarsyncmanager;HLS-STORAGE;MoveIt;Hogia Logistics Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;logisticarticlemanager;logisticarticlemanager;MoveIt;Hogia Logistics Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;logisticcontactpers;logisticcontactpersonmanager;MoveIt;Hogia Logistics Systems AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;logisticeconomystore;logisticeconomyservice;MoveIt;Hogia Logistics Systems AB;StorageV2;Hot;Standard_ZRS;westeurope;False;True;25;True;20;True;True;Enabled;True;True;True
-Hogia Star - Production Environment;logisticinvoicemanager;HLS-APP;MoveIt;Hogia Logistics Systems AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;logisticmessagestore;logisticmessageservice;MoveIt;Hogia Logistics Systems AB;StorageV2;Hot;Standard_ZRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;logisticservice;logisticservice;MoveIt;Hogia Logistics Systems AB;BlobStorage;Hot;Standard_GRS;westeurope;False;True;30;;;;;;True;True;
-Hogia Star - Production Environment;orderpricecalcstorage;HLS-STORAGE;MoveIt;Hogia Logistics Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;ordersvcstorage;orderservice;MoveIt;Hogia Logistics Systems AB;BlobStorage;Hot;Standard_GRS;westeurope;False;True;30;;;;;;True;True;
-Hogia Star - Production Environment;orderworkflowstorage;HLS-STORAGE;MoveIt;Hogia Logistics Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;pushservicestorage;pushservice;MoveIt;Hogia Logistics Systems AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;resourcesvcstorage;resourceservice;MoveIt;Hogia Logistics Systems AB;BlobStorage;Hot;Standard_GRS;westeurope;False;True;30;;;;;;True;True;
-Hogia Star - Production Environment;rfmsfunction;HLS-STORAGE;MoveIt;Hogia Logistics Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;actionsenderfunctions;HPTS-ORION;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;hptsmvjfunctions;monitoredvehiclejourneysfunctions;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_ZRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;hptstransferstorage;transfertocoldstoragefunctions;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;False;;False;False;;True;True;True
-Hogia Star - Production Environment;orioneventhubstorage;HPTS-ORION;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;orionfunctionstorage;HPTS-ORION;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;orionrealtimeinfofun;HPTS-ORION;ORION;Hogia Public Transport Systems AB;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;processedactionfunctions;HPTS-ORION;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;;;;;;True;;
-Hogia Star - Production Environment;pubtransdatalake;pubtransdatalake;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;;;;;;True;True;
-Hogia Star - Production Environment;situationservicefun;situationservicefunctions;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;vehiclerepserv;vehiclereportsenderfunctions;ORION;Hogia Public Transport Systems AB;StorageV2;Hot;Standard_LRS;westeurope;False;True;7;False;;False;False;Enabled;True;True;True
-Hogia Star - Production Environment;signitstorage;CONNECT;SignIt;Hogia Signit AB;BlobStorage;Hot;Standard_GRS;westeurope;False;True;30;;;;;;True;;
-Hogia Star - Production Environment;signitworkerstorage;signitworkerfunctions;SignIt;Hogia Signit AB;StorageV2;Hot;Standard_LRS;westeurope;False;False;;False;;False;False;;True;True;True
-Hogia Star - Production Environment;hogiastarbootdiag;Infrastructure;;;Storage;;Standard_LRS;westeurope;False;False;;;;;;;True;;
+"Subscription";"StorageAccount";"ResourceGroup";"company";"Type";"AccessTier";"SKU";"Location";"AllowPermDelete";"DeleteRetentionPolicy";"RetentionPolicyDays";"RestorePolicy";"RestorePolicyDays";"ChangedFeedEnabled";"VersioningEnabled";"PublicNetAccess";"BlobPublicAccess";"AllowSharedKey";"AllowCrossTenant"
+"Hogia Star - QA Environment";"accdocintqa";"HBP-STORAGE";"Hogia Business Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"accinboxdocstorageqa";"accountinginboxserviceqa";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"actionsenderfunctionsqa";"HPTS-ORION";"Hogia Public Transport Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"admincenterstorageqa";"admincenterqa";;"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";"True";
+"Hogia Star - QA Environment";"annualreportstoreqa";"HBP-STORAGE";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"True";"7";"False";;"False";"False";;"True";"True";
+"Hogia Star - QA Environment";"authorizationserviceqa";"ISP";"Hogia Infrastructure Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"beastpullingfunctionqa";"APP-HLS";"Hogia Logistics Systems AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"bookaccclassqa";"HBP-STORAGE";"Hogia Business Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"bureaufilestorageqa";"ROR-STORAGE";;"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"chattdocumentmigrateqa";"ROR-APP";"Hogia Fastighetssystem AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"True";"7";"False";;"False";"False";;"True";"True";
+"Hogia Star - QA Environment";"companyinfoqa";"companyinfoqa";"Hogia Connect AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"connectedvehicleqa";"connectedvehicleqa";"Hogia Logistics Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";"True";
+"Hogia Star - QA Environment";"creditsafefunctionsqa";"companyinfoqa";"Hogia Connect AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"customerinvoicestoreqa";"HBP-STORAGE";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"customermigrationstoreqa";"ISP-APP";"Hogia Infrastructure Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"dpsfuncteststorageqa";"dpsfunctionsqa";"Hogia Fastighetssystem AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"einvoicebaswareqa";"HBP-EFH-APP";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"True";"7";"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"einvoicecustomerinvqa";"invoicedistributionserviceqa";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"einvoicepeppolqa";"HBP-EFH-APP";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"einvoicesupplierinvqa";"invoicedistributionserviceqa";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"einvoicetoazurefuncqa";"invoicedistributionserviceqa";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"einvsupinfuncstorageqa";"einvoicesupplierinvoicefunctionsqa";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"ekonomistarapiqa";"ekonomistarapiqa";;"BlobStorage";"Cool";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";"True";
+"Hogia Star - QA Environment";"eservicesregfunctionsqa";"eservicesregistrationfunctionsqa";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"True";"7";"False";;"False";"False";"Enabled";"True";"True";
+"Hogia Star - QA Environment";"fintransmatchqa";"HBP-STORAGE";"Hogia Business Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"hbpstorageqa";"APP-HBP";"Hogia Business Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"hlpfileserviceqa";"SA-VOConnect";"Hogia HR Systems AB";"BlobStorage";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"hlsstarsyncmanagerqa";"HLS-STORAGE";"Hogia Logistics Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"hogiastarqastorage";"HS-STORAGE";"Hogia Infrastructure Services AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"hptsmvjfunctionsqa";"monitoredvehiclejourneysfunctionsqa";"Hogia Public Transport Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"hptstransferstorageqa";"transfertocoldstoragefunctionsqa";"Hogia Public Transport Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"hrdocumentserviceqa";"hrdocumentserviceqa";"Hogia HR Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"True";"7";"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"hrexcelfunctionstoreqa";"HRS-STORAGE";"Hogia HR Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"True";"7";"False";;"False";"False";;"True";"True";
+"Hogia Star - QA Environment";"idworkerqa";"idworkerqa";"Hogia Infrastructure Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"lassbotestarbicep2qa";"lassbotestarbicep2qa";"Hogia Infrastructure Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"lassbotestarbicep3qa";"lassbotestarbicep3qa";"Hogia Infrastructure Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"licensereportserviceqa";"ISP-APP";"Hogia Infrastructure Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"logisticarticlemanagerqa";"logisticarticlemanagerqa";"Hogia Logistics Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"logisticcontactpersqa";"logisticcontactpersonmanagerqa";"Hogia Logistics Systems AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"logisticeconomystoreqa";"logisticeconomyserviceqa";"Hogia Logistics Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"logisticinvoicemanagerqa";"HLS-APP";"Hogia Logistics Systems AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"logisticserviceqa";"logisticserviceqa";;"BlobStorage";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";"True";
+"Hogia Star - QA Environment";"migratehekdocumentsqa";"migratehekdocumentsqa";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"moveaccountingdocqa";"APP-HBP";"Hogia Business Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"mypayslipapiqa";"mypayslipapiqa";"Hogia HR Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"True";"7";"False";;"False";"False";;"True";"True";
+"Hogia Star - QA Environment";"openbusinessstoreqa";"HBP-STORAGE";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;"Enabled";"True";;
+"Hogia Star - QA Environment";"orderpricecalcstorageqa";"HLS-STORAGE";;"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"ordersvcstorageqa";"orderserviceqa";;"BlobStorage";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";"True";
+"Hogia Star - QA Environment";"orderworkflowstorageqa";"HLS-STORAGE";;"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"orioneventhubstorageqa";"HPTS-ORION";"Hogia Public Transport Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"orionfunctionstorageqa";"HPTS-ORION";"Hogia Public Transport Systems AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"orionrealtimeinfofunqa";"HPTS-ORION";"Hogia Public Transport Systems AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"pachangeactivatorqa";"pachangeactivatorfunctionqa";"Hogia HR Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";
+"Hogia Star - QA Environment";"paymentrepqa";"HRS-STORAGE";"Hogia HR Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"payrepmanv1qa";"APP-HRSYSTEMS";"Hogia HR Systems AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"pis2empmigfunctionqa";"pis2employmentmigrationfunctionqa";"Hogia HR Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"processedactionfuncqa";"HPTS-ORION";"Hogia Public Transport Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"pubtransdatalakeqa";"HPTS-ORION";"Hogia Public Transport Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";"True";
+"Hogia Star - QA Environment";"pushservicestorageqa";"pushserviceqa";"Hogia Logistics Systems AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"realestatefunctionsqa";"realestatefunctionsqa";"Hogia Fastighetssystem AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"realestatestorageqa";"FASTIGHET-APP";"Hogia Fastighetssystem AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";
+"Hogia Star - QA Environment";"reportconvertserviceqa";"HBP-STORAGE";"Hogia Infrastructure Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"resourcesvcstorageqa";"resourceserviceqa";;"BlobStorage";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";"True";
+"Hogia Star - QA Environment";"rfmsfunctionqa";"HBP-STORAGE";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"signitstorageqa";"CONNECT";"Hogia Signit AB";"BlobStorage";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"signitworkerstorageqa";"signitworkerfunctionsqa";"Hogia Signit AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"situationservicefunqa";"situationservicefunctionsqa";"Hogia Public Transport Systems AB";"StorageV2";"Cool";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"starhealthcheckqa";"ISP-APP";"Hogia Infrastructure Products AB";"Storage";;"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"supplierinvoicestoreqa";"HBP-STORAGE";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;"Enabled";"True";;
+"Hogia Star - QA Environment";"templatenetcorerestqa";"templatenetcorerestqa";"Hogia Infrastructure Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"toolbarmessageqa";"ISP";"Hogia Infrastructure Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"updatewithdatastoreqa";"updatetrnswithdatafunctionqa";"Hogia HR Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";;"True";"True";"True"
+"Hogia Star - QA Environment";"usermembershipsetupqa";"usermembershipsetupserviceqa";"Hogia Infrastructure Products AB";"BlobStorage";"Cool";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;
+"Hogia Star - QA Environment";"vehiclerepservqa";"vehiclereportsenderfunctionsqa";"Hogia Public Transport Systems AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;"False";;"False";"False";"Enabled";"True";"True";"True"
+"Hogia Star - QA Environment";"voucherserviceqa";"HBP-STORAGE";"Hogia Business Products AB";"StorageV2";"Hot";"Standard_LRS";"westeurope";"False";"False";;;;;;;"True";;

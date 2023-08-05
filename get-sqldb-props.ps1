@@ -1,11 +1,55 @@
 <#
-# TODO: update this description to include general information about the script and what it does
+##############################################################################
+# NOTE: THIS SCRIPT WILL NOT CHANGE ANY SYSTEM PROPERTIES IN THE ENVIRONMENT #
+##############################################################################
+Last modified: 2023-05-31 by roman.castro
+#
 #>
+Clear-Host
+Write-Host "============= Executing Script - Press Ctrl+C anytime to abort =============" -ForegroundColor Green
+Import-Module Az.Storage
+
+<# A user defined function prompting user for selection from a custom menu #>
+function New-PromptSelection {
+    param ()
+    $i = 0; 
+    # Creates a list with all accessible Azure subscriptions 
+    $subscriptions = New-Object System.Collections.ArrayList
+    foreach ($line in Get-AzSubscription | Select-Object Name, Id) {
+        $line | Add-Member NoteProperty -Name Index -Value $i
+        $subscriptions.Add($line) | Out-Null
+        $i++
+    }
+
+    # Creates the option list for the user to select a subscription from
+    $options = [System.Management.Automation.Host.ChoiceDescription[]]($subscriptions | ForEach-Object {
+            $label = "&$($_.Index) $($_.Name) |"
+            New-Object System.Management.Automation.Host.ChoiceDescription $label, $_.Name
+        })
+
+    # Draws the console menu and prompts user for a selection
+    $title =   "Please select a subscription from the list"
+    $message = "=========================================="
+    $selectedSubscriptionIndex = $host.ui.PromptForChoice($title, $message, $options, -1)
+
+    # Returns the selected subscription
+    return $subscriptions[$selectedSubscriptionIndex]
+}
 
 $context = Get-AzContext
-## TODO: Add support for multiple subscriptions and different SQL server pools
-## TODO: Add support for caching - optionally ask user for refresh to avoid repopulating list
-$server = Get-AzSqlServer
+# calls Azure RM and returns information about current context
+Write-Host -ForegroundColor Yellow "The current subscription is:"$context.Subscription.Name
+Write-Host "NB! This script requires appropriate permissions to the env." -ForegroundColor Cyan
+
+# presents user with a choice to either continue with current context or select a new
+$key = Read-Host "- Do you want to continue to run the script in current context? (Y/n)"
+if ($key -ne "Y") {
+    Write-Host "Loading selection menu..." -ForegroundColor Cyan
+    $selection = New-PromptSelection
+    $context = Set-AzContext -Subscription $selection.Id
+    Write-Host "You have selected a new context:" $selection.Name -ForegroundColor Yellow
+}
+$server = Get-AzSqlServer | Where-Object SqlAdministratorLogin -Match "hogiadba"
 
 ## get a list of all databases on a server by specifying ResourceGroupName and ServerName
 $dbs = Get-AzSqlDatabase -ServerName $server.ServerName -ResourceGroupName $server.ResourceGroupName
@@ -13,39 +57,42 @@ $dbs = Get-AzSqlDatabase -ServerName $server.ServerName -ResourceGroupName $serv
 $dblist = @()
 ## then loop through the list of databases and select the relevant properties
 foreach ($database in $dbs) {
-    Write-Host "Processing $($database.DatabaseName)"
-    try { 
-        if ("master" -ne $database.DatabaseName) {
+    if ("master" -eq $database.DatabaseName) {
+        Write-Host "Skipping $($database.DatabaseName)..."
+    }
+    else {
+        Write-Host "Processing $($database.DatabaseName)"
+        try { 
             $dbTDE = $database | Get-AzSqlDatabaseTransparentDataEncryption
             $dbretention = $database | Get-AzSqlDatabaseBackupShortTermRetentionPolicy
+        } catch {
+            Write-Warning -Message "$($database.DatabaseName) could not provide extended properties"
         }
-    } catch {
-        Write-Warning -Message "$($database.DatabaseName) could not provide some extended properties"
+        $dbobj = [pscustomobject]@{
+            Subscription    = $context.Subscription.Name
+            ResourceGroup   = $database.ResourceGroupName
+            ServerNAme      = $database.ServerName
+            DatabaseName    = $database.DatabaseName
+            ElasticPool     = $database.ElasticPoolName
+            isZoneRedundant = $database.ZoneRedundant
+            BackupRedudancy = $database.CurrentBackupStorageRedundancy
+            RetentionDays   = $dbretention.RetentionDays
+            DataEncryption  = $dbTDE.State
+            ServerVersion   = $server.ServerVersion
+            PublicNetAccess = $server.PublicNetworkAccess
+            Location        = $database.Location
+            Tags            = $database.Tags
+        }
+        $dblist += $dbobj
+        Write-Host "- $($database.ServerName)/$($database.DatabaseName).. OK" -ForegroundColor Green
     }
-    $dbobj = [pscustomobject]@{
-        Subscription    = $context.Subscription.Name
-        ResourceGroup   = $database.ResourceGroupName
-        DatabaseName    = $database.DatabaseName
-        Location        = $database.Location
-        ElasticPool     = $database.ElasticPoolName
-        isZoneRedundant = $database.ZoneRedundant
-        BackupRedudancy = $database.CurrentBackupStorageRedundancy
-        RetentionDays   = $dbretention.RetentionDays
-        DataEncryption  = $dbTDE.State
-        ServerVersion   = $server.ServerVersion
-        PublicNetAccess = $server.PublicNetworkAccess
-        Tags            = $database.Tags
-    }
-    $dblist += $dbobj
-    Write-Host "+$($database.DatabaseName).. OK" -ForegroundColor Green
 }
-
 $dblist | Out-GridView
 ## NB! Set the correct path to get the resulting output as an Excel file
 # $mytable | Export-Excel -Path "./azsql_db_list.xls" -WorksheetName $context.Name
 
 $nonPooled = $dblist | Where-Object { $_.ElasticPool -eq $null }
-Write-Output "Number of non-pooled (single) SQL dbs: $($nonPooled.Count)"
+Write-Output "Number of non-pooled SQL dbs: $($nonPooled.Count)"
 
 $isZR = $dblist | Where-Object { $_.isZoneRedundant }
 Write-Output "Number of zone-redundant SQL dbs: $($isZR.Count)"

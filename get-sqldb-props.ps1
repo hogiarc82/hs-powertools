@@ -50,6 +50,7 @@ if ($key -ne "Y") {
     Write-Host "You have selected a new context:" $selection.Name -ForegroundColor Yellow
 }
 $server = Get-AzSqlServer | Where-Object SqlAdministratorLogin -Match "hogiadba"
+#$server = Get-AzResourceGroup | where ResourceGroupName -match "HS-SQL" | Get-AzSqlServer ##TODO: fix bad RG names
 
 ## get a list of all databases on a server by specifying ResourceGroupName and ServerName
 $dbs = Get-AzSqlDatabase -ServerName $server.ServerName -ResourceGroupName $server.ResourceGroupName
@@ -87,10 +88,6 @@ foreach ($database in $dbs) {
         Write-Host "- $($database.ServerName)/$($database.DatabaseName).. OK" -ForegroundColor Green
     }
 }
-$dblist | Out-GridView
-## NB! Set the correct path to get the resulting output as an Excel file
-# $mytable | Export-Excel -Path "./azsql_db_list.xls" -WorksheetName $context.Name
-
 $nonPooled = $dblist | Where-Object { $_.ElasticPool -eq $null }
 Write-Output "Number of non-pooled SQL dbs: $($nonPooled.Count)"
 
@@ -104,3 +101,29 @@ $isTDE = $dblist | Where-Object { $_.DataEncryption -eq "Enabled" }
 Write-Output "Number of TDE encrypted dbs: $($isTDE.Count)"
 
 Write-Output "Total number of SQL dbs checked: $($dblist.Count)"
+
+# Presents the user with a choice of saving the results to a file or display on screen
+$key = Read-Host "- Save output to a file? Choose No to only show Gridview (Y/n)"
+if ($key -eq "Y") {
+        
+    # Outputs table to a file (make sure to include filename and extension)
+    $csvfile = "./PSOutputFiles/azsql_db_props.csv"
+
+    try {
+        Write-Host "Writing file to disk..." -ForegroundColor Cyan
+        $dblist | Export-Csv -Path $csvfile -Delimiter ";"
+        Write-Host "File Saved: Output can be found under $csvfile" -ForegroundColor Green
+    } catch {
+        Write-Error $_.Exception.GetType().FullName
+        Write-Host -ForegroundColor Yellow "Possible reason: File already open? (locked)"
+        $LASTEXITCODE = 1
+    } finally {
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host -ForegroundColor Green "Script completed successfully."
+        } else {
+            Write-Host -ForegroundColor Cyan "Script finished with exit code: $LASTEXITCODE"
+        }
+    }
+} else {
+    $dblist | Out-GridView -Title "SQLDbProperties"
+}

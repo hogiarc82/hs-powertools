@@ -110,13 +110,15 @@ foreach ($sa in $storageAccounts) {
 
         # adding fields related to network access and perimater security, etc.
         #$row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess ## DO NOT USE! (unrealiable)
-        if ($null -ne $sa.NetworkRuleSet.VirtualNetworkRules) {
+        <#         if ($null -ne $sa.NetworkRuleSet.VirtualNetworkRules) {
             $str = $sa.NetworkRuleSet.VirtualNetworkRules
             $VirtualNetworkResourceId = $str.VirtualNetworkResourceId
-            $vnetResId = $VirtualNetworkResourceId -split "/"
-            $virtualNetwork = $str.Action.ToString() + ": " + $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
-        }
-        $row | Add-Member -MemberType NoteProperty -Name 'VirtualNetworkRules' -Value $virtualNetwork
+            if ($null -ne $vnetResId) {
+                $vnetResId= $VirtualNetworkResourceId -split "/"
+                $virtualNetwork = $str.Action.ToString() + ": " + $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
+            }
+        } #>
+        #$row | Add-Member -MemberType NoteProperty -Name 'VirtualNetworkRules' -Value $virtualNetwork
         $row | Add-Member -MemberType NoteProperty -Name 'IPRules' -Value $sa.NetworkRuleSet.IpRules
         $row | Add-Member -MemberType NoteProperty -Name 'ResAccRules' -Value $sa.NetworkRuleSet.ResourceAccessRules
         $row | Add-Member -MemberType NoteProperty -Name 'DefaultAction' -Value $sa.NetworkRuleSet.DefaultAction

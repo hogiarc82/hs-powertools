@@ -102,23 +102,25 @@ foreach ($sa in $storageAccounts) {
         $row | Add-Member -MemberType NoteProperty -Name 'SKU' -Value $sa.Sku.Name
         $row | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
 
-        # calls a custom defined function to retrieve extended storage properties
+<#         # calls a custom defined function to retrieve extended storage properties //broken
         $ext = New-ExtendedStorageProps(Get-AzStorageBlobServiceProperty -StorageAccount $sa)
         $ext.PSObject.Properties | ForEach-Object {
             $row | Add-Member -MemberType NoteProperty -Name $_.Name -Value $_.Value
-        }
+        } #>
 
         # adding fields related to network access and perimater security, etc.
-        #$row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess ## DO NOT USE! (unrealiable)
-        <#         if ($null -ne $sa.NetworkRuleSet.VirtualNetworkRules) {
-            $str = $sa.NetworkRuleSet.VirtualNetworkRules
-            $VirtualNetworkResourceId = $str.VirtualNetworkResourceId
-            if ($null -ne $vnetResId) {
-                $vnetResId= $VirtualNetworkResourceId -split "/"
-                $virtualNetwork = $str.Action.ToString() + ": " + $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
+        #$row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess ## DO NOT USE! //unrealiable
+        
+        if ($sa.NetworkRuleSet.VirtualNetworkRules.Count -gt 0) {
+            $virtualNetworks = @()
+            foreach ($rule in $sa.NetworkRuleSet.VirtualNetworkRules) {
+                $vnetResId = $rule.VirtualNetworkResourceId -split "/"
+                $vnets = $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
+                $virtualNetworks += $rule.Action.ToString() + ": " + $vnets
             }
-        } #>
-        #$row | Add-Member -MemberType NoteProperty -Name 'VirtualNetworkRules' -Value $virtualNetwork
+        }
+
+        $row | Add-Member -MemberType NoteProperty -Name 'VirtualNetRules' -Value $virtualNetworks
         $row | Add-Member -MemberType NoteProperty -Name 'IPRules' -Value $sa.NetworkRuleSet.IpRules
         $row | Add-Member -MemberType NoteProperty -Name 'ResAccRules' -Value $sa.NetworkRuleSet.ResourceAccessRules
         $row | Add-Member -MemberType NoteProperty -Name 'DefaultAction' -Value $sa.NetworkRuleSet.DefaultAction

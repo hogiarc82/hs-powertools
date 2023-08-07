@@ -1,4 +1,6 @@
 
+////////////////////////////////////////////////////////////////////////////
+// NOTE: THIS QUERY WILL ONLY WORK IN AZURE RESOURCE GRAPH !!
 // This query uses "dcount" to count the number of distinct records returned.
 // The '~' in the 'type' match tells Resource Graph to be case insensitive
 Resources

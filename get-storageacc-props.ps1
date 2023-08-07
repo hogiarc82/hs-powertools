@@ -84,7 +84,7 @@ foreach ($sa in $storageAccounts) {
         Write-Host "Loading"$sa.StorageAccountName -NoNewline
         
         $row = New-Object PSObject
-        # adding fields to a table row with basic storage account properties
+        # adding fields in a row with all mandatory storage account properties
         $row | Add-Member -MemberType NoteProperty -Name 'Subscription' -Value $context.Subscription.Name
         $row | Add-Member -MemberType NoteProperty -Name 'StorageAccount' -Value $sa.StorageAccountName
         $row | Add-Member -MemberType NoteProperty -Name 'ResourceGroup' -Value $sa.ResourceGroupName
@@ -97,12 +97,10 @@ foreach ($sa in $storageAccounts) {
                 $row | Add-Member -MemberType NoteProperty -Name $key -Value $value
             }
         }
-        # adding additional storage account properties as new fields (columns)
         $row | Add-Member -MemberType NoteProperty -Name 'Type' -Value $sa.Kind
         $row | Add-Member -MemberType NoteProperty -Name 'AccessTier' -Value $sa.AccessTier
         $row | Add-Member -MemberType NoteProperty -Name 'SKU' -Value $sa.Sku.Name
         $row | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
-        
 
         # calls a custom defined function to retrieve extended storage properties
         $ext = New-ExtendedStorageProps(Get-AzStorageBlobServiceProperty -StorageAccount $sa)
@@ -111,7 +109,19 @@ foreach ($sa in $storageAccounts) {
         }
 
         # adding fields related to network access and perimater security, etc.
-        $row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess
+        #$row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess ## DO NOT USE! (unrealiable)
+        if ($null -ne $sa.NetworkRuleSet.VirtualNetworkRules) {
+            $str = $sa.NetworkRuleSet.VirtualNetworkRules
+            $VirtualNetworkResourceId = $str.VirtualNetworkResourceId
+            $vnetResId = $VirtualNetworkResourceId -split "/"
+            $virtualNetwork = $str.Action.ToString() + ": " + $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
+        }
+        $row | Add-Member -MemberType NoteProperty -Name 'VirtualNetworkRules' -Value $virtualNetwork
+        $row | Add-Member -MemberType NoteProperty -Name 'IPRules' -Value $sa.NetworkRuleSet.IpRules
+        $row | Add-Member -MemberType NoteProperty -Name 'ResAccRules' -Value $sa.NetworkRuleSet.ResourceAccessRules
+        $row | Add-Member -MemberType NoteProperty -Name 'DefaultAction' -Value $sa.NetworkRuleSet.DefaultAction
+        $row | Add-Member -MemberType NoteProperty -Name 'ByPassAllowed' -Value $sa.NetworkRuleSet.Bypass
+        $row | Add-Member -MemberType NoteProperty -Name 'EnableHttpsOnly' -Value $sa.EnableHttpsTrafficOnly
         $row | Add-Member -MemberType NoteProperty -Name 'BlobPublicAccess' -Value $sa.AllowBlobPublicAccess
         $row | Add-Member -MemberType NoteProperty -Name 'AllowSharedKey' -Value $sa.AllowSharedKeyAccess
         $row | Add-Member -MemberType NoteProperty -Name 'AllowCrossTenant' -Value $sa.AllowCrossTenantReplication

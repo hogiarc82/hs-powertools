@@ -48,6 +48,7 @@ foreach ($asp in $serviceplans) {
     $apps = Get-AzWebApp -AppServicePlan $asp
     
     foreach ($app in $apps) {
+        Get-AzWebApp
         Set-AzWebApp -Name $app.Name -ResourceGroupName $app.ResourceGroup -FtpsState Disabled
     }
 }

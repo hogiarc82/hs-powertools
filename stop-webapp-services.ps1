@@ -1,3 +1,8 @@
+#############################################################################
+# SCRIPT IS UNDER CONSTRUCTION !!! SCRIPT IS UNDER CONSTRUCTION !!! SCRIPT IS
+#############################################################################
+#
+#
 <# A user defined function prompting user for selection from a custom menu #>
 function New-PromptSelection {
     param ()
@@ -39,49 +44,47 @@ if ($key -ne "Y") {
     Write-Host "You have selected a new context:" $selection.Name -ForegroundColor Yellow
 }
 
-##### Script to stop Apps in a App service starts here #####
+##### Script to stop WebApps services starts here #####
 
-#Params
-$resourceGroupName = "HS-SERVICEPLANS"
-$SPName = "SP01-INT"
-$AppRGName = "HPTS-Orion"
+#Params ++TODO: 
+$resourceGroupName = "HS-SERVICEPLANS" #should be infered from the current context
+$SPName = "SP01-INT" #should be selectable from a menu
+$AppRGName = "HPTS-Orion" #should be selectable from a menu or infered
 
-#Gets a list of all apps within a Service Plan
+#Gets a list of all apps within a given App Service Plan
 $plans = Get-AzAppServicePlan -ResourceGroupName $resourceGroupName -Name $SPName
-
 $apps = Get-AzWebApp -AppServicePlan $plans | Where-Object ResourceGroup -eq $AppRGName
 
 Write-Host "List of filtered Apps Complete" -ForegroundColor Cyan
 
-
-#Adds all the slots to the list that are connected to said Apps
-$slots = @()
-
-foreach ($app in $apps) {
-
-    $slot = Get-AzWebAppSlot -WebApp $app | Where-Object ResourceGroup -eq $AppRGName
-    $slot.Name
-    $slots += $slot
-
+#Stops all apps and slots in a specific resource group
+$apps | ForEach-Object -ThrottleLimit 10 -Parallel {
+    $slot = $_ | Get-AzWebAppSlot | Where-Object ResourceGroup -eq $AppRGName
+    if ( $slot.State -eq "Running") {
+        try {
+            Write-Host "Stopping slot..." $slot.Name -ForegroundColor Yellow
+            $slot | Stop-AzWebAppSlot | Out-Null    
+        }
+        catch {
+            $Error[0]
+        }
+    }
+    if ($slot.State -eq "Stopped" ) {
+        Write-Host "Stopping..." $_.Name -ForegroundColor Green 
+        $_ | Stop-AzWebApp | Out-Null
+    }
 }
-
-Write-Host "Added all filtered slots to a list" -ForegroundColor Blue
-
 #Stops all apps in a specific resource group
 foreach ($app in $apps) {
 
     #Before stopping apps, stop all slots
-    foreach ($slot in $slots) {
-
+    $slots | ForEach-Object -ThrottleLimit 10 -Parallel {
         Write-Host "Stopping" $slot.Name -ForegroundColor Yellow
-        Stop-AzWebAppSlot -WebApp $slot
-
+        Stop-AzWebAppSlot -WebApp $slot | Out-Null
     }
-
+    # Stop apps
     Write-host "Stopping" $app.Name -ForegroundColor Green 
-
-    Stop-AzWebApp -WebApp $app
+    Stop-AzWebApp -WebApp $app | Out-Null
 
 }
-
 Write-Host "Job Complete"

@@ -5,8 +5,8 @@
 $runtimes = [System.Collections.Generic.List[object]]@()
 
 # Get subscription id
-Write-Progress "Fetching subscription id"
-$subscription = (az account show --query id -o tsv)
+#Write-Progress "Fetching subscription id"
+#$subscription = (az account show --query id -o tsv)
 
 # Get all resource groups in the subscription
 Write-Progress "Searching for resource groups"
@@ -76,4 +76,4 @@ foreach($group in $groups) {
 }
 
 # Convert the collection to JSON and write it out to a file
-Write-Output $runtimes  | ConvertTo-Json > "webapp-runtimes-$subscription.json"
+Write-Output $runtimes  | out-gridview #ConvertTo-Json > "webapp-runtimes-$subscription.json"

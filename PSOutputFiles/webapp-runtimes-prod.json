@@ -1,0 +1,2522 @@
+[
+  {
+    "resourcegroup": "HBP",
+    "name": "accrualmanagertest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HBP",
+    "name": "eservicescontactservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HBP",
+    "name": "accrualservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HBP",
+    "name": "voucherservicepluginstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "trafficinformationpanelwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "instantrealtimepositionstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "journeycreationwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "customerartifactservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "instantservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "situationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "instantequipmentservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "instantcollaborationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "vehicleinventoryservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "instantconfigurationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "publictransportdeviationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HPTS-ORION",
+    "name": "publictransportjourneycreationservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "paysliptest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "lonplusstarapitest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "mypayslippwatest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "mypaysliptest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "payslipapitest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "mypayslipapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "transactionservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "fieldmappingservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "transactionmanagertest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "mytimetransactiondraftservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "hlpfileservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "schedulingmanagertest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "londataservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "payslipreaderservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HR_SYSTEMS",
+    "name": "reportinformationservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "ISP",
+    "name": "ISPFAQ",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "ISP",
+    "name": "ispsupport",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "ISP",
+    "name": "customermanagementwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ISP",
+    "name": "onboardingservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ISP",
+    "name": "bootstraptest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ISP",
+    "name": "administrationcenterservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "ISP",
+    "name": "corelicenseeinformationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "VO_CONNECT",
+    "name": "companyinformationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "mobilaststarapitest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "logisticstarsyncapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "wasteapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "moveittest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "assetapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "planitapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "beastservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "logisticstarsyncservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "logisticinvoiceservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "wasteservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "assetservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "logisticservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "orderservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-HLS",
+    "name": "resourceservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "ROR-APP",
+    "name": "bureauassignmentdataservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "tenantportaltest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatebankintegrationstarapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatestarapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatesurveytest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "rentalbillservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestateroleservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "technicalspecificationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatesurveyservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatesearchservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatepropertyservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatepropertymanagerservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestaterentalagreementservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestateeventservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatetemplateservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "FASTIGHET",
+    "name": "realestatereportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ISS",
+    "name": "bvtestclone",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "HRP",
+    "name": "openhrtest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HRP",
+    "name": "fielddefinitionwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HRP",
+    "name": "fielddefinitionplugintest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "HRP",
+    "name": "hrsettingservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "APP-ISS",
+    "name": "healthprobe",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HRS",
+    "name": "employeefieldwebcomponentstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HRS",
+    "name": "lonsignitcoreapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HRS",
+    "name": "paymentreportsapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "HRS",
+    "name": "pachangewebcomponentstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HRS",
+    "name": "pacoreapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HRS",
+    "name": "lonbankintegrationcoreapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HRS",
+    "name": "pachangeservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "usermembershipsetupservicetest",
+    "name": "usermembershipsetupservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HBP-EFH-APP",
+    "name": "hemantest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "HBP-EFH-APP",
+    "name": "einvoicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "HBP-EFH-APP",
+    "name": "eservicesdatatest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "HBP-EFH-APP",
+    "name": "einvoiceloadbalanceservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "HBP-EFH-APP",
+    "name": "eservicesblacklistservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "HBP-EFH-APP",
+    "name": "eservicesmanagertest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "HBP-EFH-APP",
+    "name": "vanmapperservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "HBP-EFH-APP",
+    "name": "externalinvoiceretrieverworkertest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "invitationsservicetest",
+    "name": "invitationsservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "VoucherServicePoc",
+    "name": "voucherservicepoc",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "openhrreportservicetest",
+    "name": "openhrreportservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "logisticportaltest",
+    "name": "logisticportaltest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bureaucontactservicetest",
+    "name": "bureaucontactservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "bureaupowerofattorneyservicetest",
+    "name": "bureaupowerofattorneyservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "ixbrlservicetest",
+    "name": "ixbrlservicetest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "bureaumessagethreadservicetest",
+    "name": "bureaumessagethreadservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "symfonistarapitest",
+    "name": "symfonistarapitest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "symfoniskattservicetest",
+    "name": "symfoniskattservicetest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "symfoniabkservicetest",
+    "name": "symfoniabkservicetest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "mypointtest",
+    "name": "mypointtest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "pointtest",
+    "name": "pointtest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "accountingauditservicetest",
+    "name": "accountingauditservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "dashboardwebcomponenttest",
+    "name": "dashboardwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "openbusinessadmintest",
+    "name": "openbusinessadmintest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "fosmanagertest",
+    "name": "fosmanagertest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "profilescomponentapitest",
+    "name": "profilescomponentapitest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "mytimeapitest",
+    "name": "mytimeapitest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "mytimemobileapitest",
+    "name": "mytimemobileapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "employeesmanagertest",
+    "name": "employeesmanagertest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "personinformationmanagertest",
+    "name": "personinformationmanagertest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "personinformationservicetest",
+    "name": "personinformationservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "accumulatorservicetest",
+    "name": "accumulatorservicetest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "auditservicetest",
+    "name": "auditservicetest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "schedulingservicetest",
+    "name": "schedulingservicetest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "timestampservicetest",
+    "name": "timestampservicetest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "instanttest",
+    "name": "instanttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ekonomistarapitest",
+    "name": "ekonomistarapitest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "mytimetest",
+    "name": "mytimetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "Mytimecomponentstest",
+    "name": "mytimecomponentstest",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "Organizationservicetest",
+    "name": "organizationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starlicensingservicetest",
+    "name": "starlicensingservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "publictransportoccupancyservicetest",
+    "name": "publictransportoccupancyservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "hrimportservicetest",
+    "name": "hrimportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "orderdocumentapitest",
+    "name": "orderdocumentapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademy5test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademy3test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademy4test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademy1test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademy6test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademy2test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademyservice1test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademyservice2test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademyservice3test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademyservice4test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademyservice5test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "Starschool",
+    "name": "staracademyservice6test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "realestatestarsyncapitest",
+    "name": "realestatestarsyncapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "myterminaltest",
+    "name": "myterminaltest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "logisticcontactpersonservicetest",
+    "name": "logisticcontactpersonservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "logisticemailservicetest",
+    "name": "logisticemailservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "workflowwebcomponenttest",
+    "name": "workflowwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "accountinginboxservicetest",
+    "name": "accountinginboxservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "articleservicetest",
+    "name": "articleservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ekonomiplugindataservicetest",
+    "name": "ekonomiplugindataservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "credibilityinformationservicetest",
+    "name": "credibilityinformationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ekonomipluginstarapitest",
+    "name": "ekonomipluginstarapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "approvalcompactservicetest",
+    "name": "approvalcompactservicetest",
+    "host": "windows",
+    "runtime": "",
+    "version": null
+  },
+  {
+    "resourcegroup": "LogisticCoreSystemApitest",
+    "name": "LogisticCoreSystemApitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "recycleitapitest",
+    "name": "recycleitapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "logisticarticleservicetest",
+    "name": "logisticarticleservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "licensingmanagementservicetest",
+    "name": "licensingmanagementservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "invoicedistributionservicetest",
+    "name": "invoicedistributionservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "documentparserservicetest",
+    "name": "documentparserservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "timereportnotificationservicetest",
+    "name": "timereportnotificationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "logisticapiservicetest",
+    "name": "logisticapiservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "lontaxauthoritiescoreapitest",
+    "name": "lontaxauthoritiescoreapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "pocsalaryservicetest",
+    "name": "pocsalaryservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "rssservicetest",
+    "name": "rssservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "rsstest",
+    "name": "rsstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "fortnoxintegrationtest",
+    "name": "fortnoxintegrationtest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "fortnoxintegrationapptest",
+    "name": "fortnoxintegrationapptest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "emailinvoicedistributorworkertest",
+    "name": "emailinvoicedistributorworkertest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "einvoicesupplierinvoiceservicetest",
+    "name": "einvoicesupplierinvoiceservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "vanservicetest",
+    "name": "vanservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "edisearchservicetest",
+    "name": "edisearchservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "publictransportsituationservicetest",
+    "name": "publictransportsituationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "publictransportequipmentservicetest",
+    "name": "publictransportequipmentservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "admincentertest",
+    "name": "admincentertest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "dpsauthorizationfilterservicetest",
+    "name": "dpsauthorizationfilterservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "connectpluginstest",
+    "name": "connectpluginstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "deviationtypeacplugintest",
+    "name": "deviationtypeacplugintest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "eservicescomponentstest",
+    "name": "eservicescomponentstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "hrcomponentstest",
+    "name": "hrcomponentstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "hrscomponentstest",
+    "name": "hrscomponentstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "isppluginstest",
+    "name": "isppluginstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "pointbureaulogservicepluginstest",
+    "name": "pointbureaulogservicepluginstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "realestatesearchplugintest",
+    "name": "realestatesearchplugintest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "realestateequipmenttypeplugintest",
+    "name": "realestateequipmenttypeplugintest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "realestateorganizationchangeplugintest",
+    "name": "realestateorganizationchangeplugintest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "realestateroomtypeplugintest",
+    "name": "realestateroomtypeplugintest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "logisticspluginstest",
+    "name": "logisticspluginstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "bankaccounttransactionmatchingservicetest",
+    "name": "bankaccounttransactionmatchingservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "logisticeconomyservicetest",
+    "name": "logisticeconomyservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "dynamicsapitest",
+    "name": "dynamicsapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "signitpluginstest",
+    "name": "signitpluginstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "ekonomipluginmonitoringservicetest",
+    "name": "ekonomipluginmonitoringservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "auditreporttest",
+    "name": "auditreporttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "auditreportservicetest",
+    "name": "auditreportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "nextintegrationservicetest",
+    "name": "nextintegrationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "lontimecoreapitest",
+    "name": "lontimecoreapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "realestateopenbusinessstarapitest",
+    "name": "realestateopenbusinessstarapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "vehiclereportservicetest",
+    "name": "vehiclereportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bankaccountwebcomponenttest",
+    "name": "bankaccountwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "quinyxmanagertest",
+    "name": "quinyxmanagertest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "developerdocumentationservicetest",
+    "name": "developerdocumentationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bankidservicetest",
+    "name": "bankidservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "kivraservicetest",
+    "name": "kivraservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bankintegrationservicetest",
+    "name": "bankintegrationservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "quinyxsettingservicetest",
+    "name": "quinyxsettingservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "callbackservicetest",
+    "name": "callbackservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bolagsverketservicetest",
+    "name": "bolagsverketservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "starapitest",
+    "name": "starapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "connectcorestarapitest",
+    "name": "connectcorestarapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "signitservicetest",
+    "name": "signitservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "signitmanagertest",
+    "name": "signitmanagertest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "connectpluginservicetest",
+    "name": "connectpluginservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ekonomiplugincomponentstest",
+    "name": "ekonomiplugincomponentstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "trainservicetest",
+    "name": "trainservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "dynamicseconomytest",
+    "name": "dynamicseconomytest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "coworkerfacadetest",
+    "name": "coworkerfacadetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "testdataservice",
+    "name": "testdataservice",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "fejk",
+    "name": "fejk",
+    "host": "windows",
+    "runtime": null,
+    "version": null
+  },
+  {
+    "resourcegroup": "terminalpluginstest",
+    "name": "terminalpluginstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "staroverviewtest",
+    "name": "staroverviewtest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "toolbarservicetest",
+    "name": "toolbarservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "realestatebulletinboardservicetest",
+    "name": "realestatebulletinboardservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bundlenotificationservicetest",
+    "name": "bundlenotificationservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "salarycomponentstest",
+    "name": "salarycomponentstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "schedulingservicev2test",
+    "name": "schedulingservicev2test",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "vehicleregisterservicetest",
+    "name": "vehicleregisterservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "vehicleassignmentwebcomponenttest",
+    "name": "vehicleassignmentwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "supplierinvoiceapprovalinformationwebcomponenttest",
+    "name": "supplierinvoiceapprovalinformationwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "supplierinvoiceapprovaldetailswebcomponenttest",
+    "name": "supplierinvoiceapprovaldetailswebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "approvaladministrationwebcomponenttest",
+    "name": "approvaladministrationwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "xbrlreportservicetest",
+    "name": "xbrlreportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "trialservicetest",
+    "name": "trialservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "addorganizationdialogwebcomponenttest",
+    "name": "addorganizationdialogwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "salaryserviceclassictest",
+    "name": "salaryserviceclassictest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "accounttemplateplugintest",
+    "name": "accounttemplateplugintest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "signitapprovalinformationwebcomponenttest",
+    "name": "signitapprovalinformationwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "resourceservicenetcoretest",
+    "name": "resourceservicenetcoretest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "trialsapitest",
+    "name": "trialsapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "realestatepfdocumentstarapitest",
+    "name": "realestatepfdocumentstarapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "realestatepfdocumentservicetest",
+    "name": "realestatepfdocumentservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "realestatepfdocumentmanagertest",
+    "name": "realestatepfdocumentmanagertest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "salarytaxservicetest",
+    "name": "salarytaxservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "hogiacloudusersyncservicetest",
+    "name": "hogiacloudusersyncservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "moveitfacadetest",
+    "name": "moveitfacadetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "signitsignatureservicetest",
+    "name": "signitsignatureservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "hrdocumentservicetest",
+    "name": "hrdocumentservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "annualreporttest",
+    "name": "annualreporttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "terminalsystemdirectoryapitest",
+    "name": "terminalsystemdirectoryapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "recyclemobileapitest",
+    "name": "recyclemobileapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "constructionmobileapitest",
+    "name": "constructionmobileapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "financialyearswebcomponentstest",
+    "name": "financialyearswebcomponentstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "approvalwebtest",
+    "name": "approvalwebtest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "openbusinesstest",
+    "name": "openbusinesstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "instantactionwebcomponentstest",
+    "name": "instantactionwebcomponentstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "customerartifactdeploymappertest",
+    "name": "customerartifactdeploymappertest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "fieldmappingwebcomponentstest",
+    "name": "fieldmappingwebcomponentstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "lontest",
+    "name": "lontest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "idtest",
+    "name": "idtest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "apitest",
+    "name": "apitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "rorstatisticsservicetest",
+    "name": "rorstatisticsservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "crmintegrationservicetest",
+    "name": "crmintegrationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "mytest",
+    "name": "mytest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "templatenetcorewebtest",
+    "name": "templatenetcorewebtest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "dynamicsintegrationservicetest",
+    "name": "dynamicsintegrationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "templatewebcomponenttest",
+    "name": "templatewebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bureautaxtest",
+    "name": "bureautaxtest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "chattwebcomponenttest",
+    "name": "chattwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "pointmanagertest",
+    "name": "pointmanagertest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "signittest",
+    "name": "signittest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "pricematrixservicetest",
+    "name": "pricematrixservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "customerprojectservicetest",
+    "name": "customerprojectservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "terminalsystemservicetest",
+    "name": "terminalsystemservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "locationservicetest",
+    "name": "locationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "customerinvoiceservicetest",
+    "name": "customerinvoiceservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "eservicesregistrationservicetest",
+    "name": "eservicesregistrationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "supplierinvoicereceivedeventhandlertest",
+    "name": "supplierinvoicereceivedeventhandlertest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "casemanagementwebcomponenttest",
+    "name": "casemanagementwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "approvalservicetest",
+    "name": "approvalservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "accountingfacadetest",
+    "name": "accountingfacadetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "sieexportservicetest",
+    "name": "sieexportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "accountingrulesservicetest",
+    "name": "accountingrulesservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "financialyearservicetest",
+    "name": "financialyearservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "contactservicetest",
+    "name": "contactservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "realestatereportstarapitest",
+    "name": "realestatereportstarapitest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "currencyservicetest",
+    "name": "currencyservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "sieimportservicetest",
+    "name": "sieimportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "settingservicetest",
+    "name": "settingservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "supplierinvoiceservicetest",
+    "name": "supplierinvoiceservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "approvalrulesservicetest",
+    "name": "approvalrulesservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "voucherservicetest",
+    "name": "voucherservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "accountingmanagerservicetest",
+    "name": "accountingmanagerservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "businessdatawarehouseservicetest",
+    "name": "businessdatawarehouseservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "inmailservicetest",
+    "name": "inmailservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "dimensionservicetest",
+    "name": "dimensionservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "vatservicetest",
+    "name": "vatservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "accountservicetest",
+    "name": "accountservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "financialplanningservicetest",
+    "name": "financialplanningservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "itemaccountingservicetest",
+    "name": "itemaccountingservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "noteservicetest",
+    "name": "noteservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "projectservicetest",
+    "name": "projectservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "annualreportservicetest",
+    "name": "annualreportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "actionservicetest",
+    "name": "actionservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "vehiclejourneyservicetest",
+    "name": "vehiclejourneyservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "vehiclemonitoringservicetest",
+    "name": "vehiclemonitoringservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "agiservicetest",
+    "name": "agiservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "agreementservicetest",
+    "name": "agreementservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "deviationservicetest",
+    "name": "deviationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "employmentservicetest",
+    "name": "employmentservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "organizationgroupservicetest",
+    "name": "organizationgroupservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "salarylonfileservicetest",
+    "name": "salarylonfileservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "salaryservicetest",
+    "name": "salaryservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "salaryvacationservicetest",
+    "name": "salaryvacationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "timeagreementservicetest",
+    "name": "timeagreementservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "timereportservicetest",
+    "name": "timereportservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "apiservicetest",
+    "name": "apiservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "applicationservicetest",
+    "name": "applicationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "authorizationservicetest",
+    "name": "authorizationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "busservicetest",
+    "name": "busservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "cleanupservicetest",
+    "name": "cleanupservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "crmintegrationinternalservicetest",
+    "name": "crmintegrationinternalservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "customeraccountservicetest",
+    "name": "customeraccountservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "customermembershipservicetest",
+    "name": "customermembershipservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "customermigrationservicetest",
+    "name": "customermigrationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "idservicetest",
+    "name": "idservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "integrationservicetest",
+    "name": "integrationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "notificationservicetest",
+    "name": "notificationservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bureaufileservicetest",
+    "name": "bureaufileservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bureaupointsettingsservicetest",
+    "name": "bureaupointsettingsservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "bureautaxservicetest",
+    "name": "bureautaxservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "termsservicetest",
+    "name": "termsservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "toolbarmessageservicetest",
+    "name": "toolbarmessageservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "webcomponentparametersservicetest",
+    "name": "webcomponentparametersservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "itemservicetest",
+    "name": "itemservicetest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "openpropertytest",
+    "name": "openpropertytest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "einvoicecustomerinvoiceservicetest",
+    "name": "einvoicecustomerinvoiceservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "bankintegrationservicepluginstest",
+    "name": "bankintegrationservicepluginstest",
+    "host": "windows",
+    "runtime": "dotnetcore",
+    "version": null
+  },
+  {
+    "resourcegroup": "ekonomipluginintegrationservicetest",
+    "name": "ekonomipluginintegrationservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "skatteverketintegrationservicetest",
+    "name": "skatteverketintegrationservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "moveitfeaturetest",
+    "name": "moveitfeaturetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "saxonxsltservicetest",
+    "name": "saxonxsltservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "usermanagementdialogswebcomponenttest",
+    "name": "usermanagementdialogswebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "instantactiondetailswebcomponentstest",
+    "name": "instantactiondetailswebcomponentstest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "orderservicenetcoretest",
+    "name": "orderservicenetcoretest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "invitationscomponentapitest",
+    "name": "InvitationsComponentApitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "hogpttest",
+    "name": "hogpttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "realestatetechspecexporttest",
+    "name": "realestatetechspecexporttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "businessdatacoreapitest",
+    "name": "businessdatacoreapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "roleplugintest",
+    "name": "roleplugintest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "txtimporttest",
+    "name": "txtimporttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "moveitportaltest",
+    "name": "moveitportaltest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "logisticmessageservicetest",
+    "name": "logisticmessageservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "toolbarwebcomponenttest",
+    "name": "toolbarwebcomponenttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "salaryimporttransactionservicetest",
+    "name": "salaryimporttransactionservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "thymecomponentsacplugintest",
+    "name": "thymecomponentsacplugintest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "templatenetcoreresttest",
+    "name": "templatenetcoreresttest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "pwiacservicetest",
+    "name": "pwiacservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "licensemanagementservice",
+    "name": "licensemanagementservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v4.0"
+  },
+  {
+    "resourcegroup": "testingapplayertest",
+    "name": "testingapplayertest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "lassbolaunchtestarbicepapitest",
+    "name": "lassbolaunchtestarbicepapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "lonforacoreapitest",
+    "name": "lonforacoreapitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "hranalyticsservicetest",
+    "name": "hranalyticsservicetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "lassbotest15junitest",
+    "name": "lassbotest15junitest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  },
+  {
+    "resourcegroup": "ekonomifacadetest",
+    "name": "ekonomifacadetest",
+    "host": "windows",
+    "runtime": "dotnet",
+    "version": "v6.0"
+  }
+]

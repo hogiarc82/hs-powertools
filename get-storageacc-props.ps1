@@ -88,7 +88,8 @@ foreach ($sa in $storageAccounts) {
         $row | Add-Member -MemberType NoteProperty -Name 'Subscription' -Value $context.Subscription.Name
         $row | Add-Member -MemberType NoteProperty -Name 'StorageAccount' -Value $sa.StorageAccountName
         $row | Add-Member -MemberType NoteProperty -Name 'ResourceGroup' -Value $sa.ResourceGroupName
-
+        
+        Write-Host "..." -NoNewline
         # retrieves storage account tags and adds them as fields (columns)
         $acceptKeys = "company", "team"
         foreach ($key in $sa.Tags.Keys) {
@@ -102,26 +103,45 @@ foreach ($sa in $storageAccounts) {
         $row | Add-Member -MemberType NoteProperty -Name 'SKU' -Value $sa.Sku.Name
         $row | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
 
-<#         # calls a custom defined function to retrieve extended storage properties //broken
+        <#         # calls a custom defined function to retrieve extended storage properties //broken
         $ext = New-ExtendedStorageProps(Get-AzStorageBlobServiceProperty -StorageAccount $sa)
         $ext.PSObject.Properties | ForEach-Object {
             $row | Add-Member -MemberType NoteProperty -Name $_.Name -Value $_.Value
         } #>
-
-        # adding fields related to network access and perimater security, etc.
-        #$row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess ## DO NOT USE! //unrealiable
         
         if ($sa.NetworkRuleSet.VirtualNetworkRules.Count -gt 0) {
-            $virtualNetworks = @()
+            $netProps = @()
             foreach ($rule in $sa.NetworkRuleSet.VirtualNetworkRules) {
                 $vnetResId = $rule.VirtualNetworkResourceId -split "/"
                 $vnets = $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
-                $virtualNetworks += $rule.Action.ToString() + ": " + $vnets
+                $netProps += $rule.Action.ToString() + ": " + $vnets
+            }
+            $virtualNetworks = $netProps | ConvertTo-Json
+        }
+        $IPRuleSet = @{
+            Allowed = @()
+            Denied  = @()
+        }
+        if ($sa.NetworkRuleSet.IpRules.Count -gt 0) {
+            $i = 0;
+            foreach ($rule in $sa.NetworkRuleSet.IpRules) {
+                $ruleAction = $sa.NetworkRuleSet.IpRules[$i].Action
+                switch ($ruleAction) {
+                    "Allow" { 
+                        $IPRuleSet['Allowed'] += $sa.NetworkRuleSet.IpRules[$i].IPAddressOrRange 
+                    }
+                    "Deny" { 
+                        $IPRuleSet['Denied'] += $sa.NetworkRuleSet.IpRules[$i].IPAddressOrRange 
+                    }
+                }
+                $i++;
             }
         }
 
+        # adding fields related to network access and perimeter security, etc.
+        $row | Add-Member -MemberType NoteProperty -Name 'AllowIPRule' -Value $IPRuleSet['Allowed']
+        $row | Add-Member -MemberType NoteProperty -Name 'DenyIPRule' -Value $IPRuleSet['Denied']
         $row | Add-Member -MemberType NoteProperty -Name 'VirtualNetRules' -Value $virtualNetworks
-        $row | Add-Member -MemberType NoteProperty -Name 'IPRules' -Value $sa.NetworkRuleSet.IpRules
         $row | Add-Member -MemberType NoteProperty -Name 'ResAccRules' -Value $sa.NetworkRuleSet.ResourceAccessRules
         $row | Add-Member -MemberType NoteProperty -Name 'DefaultAction' -Value $sa.NetworkRuleSet.DefaultAction
         $row | Add-Member -MemberType NoteProperty -Name 'ByPassAllowed' -Value $sa.NetworkRuleSet.Bypass
@@ -129,6 +149,7 @@ foreach ($sa in $storageAccounts) {
         $row | Add-Member -MemberType NoteProperty -Name 'BlobPublicAccess' -Value $sa.AllowBlobPublicAccess
         $row | Add-Member -MemberType NoteProperty -Name 'AllowSharedKey' -Value $sa.AllowSharedKeyAccess
         $row | Add-Member -MemberType NoteProperty -Name 'AllowCrossTenant' -Value $sa.AllowCrossTenantReplication
+        #$row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess ## DO NOT USE! //unrealiable
 
         # adds the entire row to the master list (table)
         $list.Add($row) | Out-Null

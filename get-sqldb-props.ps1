@@ -71,20 +71,20 @@ foreach ($database in $dbs) {
             Write-Warning -Message "$($database.DatabaseName) could not provide extended properties"
         }
         $dbobj = [pscustomobject]@{
-            Subscription    = $context.Subscription.Name
-            ResourceGroup   = $database.ResourceGroupName
-            ServerName      = $database.ServerName
-            Location        = $database.Location
-            DatabaseName    = $database.DatabaseName
-            ElasticPool     = $database.ElasticPoolName
-            isZoneRedundant = $database.ZoneRedundant
-            BackupRedudancy = $database.CurrentBackupStorageRedundancy
-            RetentionDays   = $dbSTR.RetentionDays
-            DataEncryption  = $dbTDE.State
-            DataMaskingOn   = $dbDMS.DataMaskingState
-            ServerVersion   = $server.ServerVersion
-            PublicNetAccess = $server.PublicNetworkAccess
-            Tags            = $database.Tags
+            Subscription     = $context.Subscription.Name
+            ResourceGroup    = $database.ResourceGroupName
+            ServerName       = $database.ServerName
+            Location         = $database.Location
+            DatabaseName     = $database.DatabaseName
+            ElasticPool      = $database.ElasticPoolName
+            MaxSizeBytesGB   = $database.MaxSizeBytes / (1024 * 1024 * 1024)
+            isZoneRedundant  = $database.ZoneRedundant
+            BackupRedundancy = $database.CurrentBackupStorageRedundancy
+            RetentionDays    = $dbSTR.RetentionDays
+            DataEncryption   = $dbTDE.State
+            DataMasking      = $dbDMS.DataMaskingState
+            PublicNetAccess  = $server.PublicNetworkAccess
+            Tags             = $database.Tags
         }
         $list += $dbobj
         Write-Host "- $($database.ServerName)/$($database.DatabaseName).. OK" -ForegroundColor Green
@@ -93,16 +93,17 @@ foreach ($database in $dbs) {
 $nonPooled = $list | Where-Object { $_.ElasticPool -eq $null }
 Write-Output "Number of non-pooled SQL dbs: $($nonPooled.Count)"
 
+$isTDE = $list | Where-Object { $_.DataEncryption -eq "Enabled" }
+Write-Output "Number of TDE encrypted dbs: $($isTDE.Count)"
+
 $isZR = $list | Where-Object { $_.isZoneRedundant }
 Write-Output "Number of zone-redundant SQL dbs: $($isZR.Count)"
 
 $isGeo = $list | Where-Object { $_.BackupRedudancy -eq "Geo" }
-Write-Output "Number of geo-redundant SQL dbs: $($isGeo.Count)"
-
-$isTDE = $list | Where-Object { $_.DataEncryption -eq "Enabled" }
-Write-Output "Number of TDE encrypted dbs: $($isTDE.Count)"
+Write-Output "Number of geo-backuped SQL dbs: $($isGeo.Count)"
 
 Write-Output "Total number of SQL dbs checked: $($list.Count)"
+Write-Output "-------------------------------------------------)"
 
 # Presents the user with a choice of saving the results to a file or display on screen
 $key = Read-Host "- Save output to a file? Choose No to only show Gridview (Y/n)"

@@ -55,7 +55,7 @@ $server = Get-AzSqlServer | Where-Object SqlAdministratorLogin -Match "hogiadba"
 ## get a list of all databases on a server by specifying ResourceGroupName and ServerName
 $dbs = Get-AzSqlDatabase -ServerName $server.ServerName -ResourceGroupName $server.ResourceGroupName
 
-$dblist = @()
+$list = @()
 ## then loop through the list of databases and select the relevant properties
 foreach ($database in $dbs) {
     if ("master" -eq $database.DatabaseName) {
@@ -64,55 +64,60 @@ foreach ($database in $dbs) {
     else {
         Write-Host "Processing $($database.DatabaseName)"
         try { 
+            $dbDMS = $database | Get-AzSqlDatabaseDataMaskingPolicy
             $dbTDE = $database | Get-AzSqlDatabaseTransparentDataEncryption
-            $dbretention = $database | Get-AzSqlDatabaseBackupShortTermRetentionPolicy
+            $dbSTR = $database | Get-AzSqlDatabaseBackupShortTermRetentionPolicy
         } catch {
             Write-Warning -Message "$($database.DatabaseName) could not provide extended properties"
         }
         $dbobj = [pscustomobject]@{
             Subscription    = $context.Subscription.Name
             ResourceGroup   = $database.ResourceGroupName
-            ServerNAme      = $database.ServerName
+            ServerName      = $database.ServerName
+            Location        = $database.Location
             DatabaseName    = $database.DatabaseName
             ElasticPool     = $database.ElasticPoolName
             isZoneRedundant = $database.ZoneRedundant
             BackupRedudancy = $database.CurrentBackupStorageRedundancy
-            RetentionDays   = $dbretention.RetentionDays
+            RetentionDays   = $dbSTR.RetentionDays
             DataEncryption  = $dbTDE.State
+            DataMaskingOn   = $dbDMS.DataMaskingState
             ServerVersion   = $server.ServerVersion
             PublicNetAccess = $server.PublicNetworkAccess
-            Location        = $database.Location
             Tags            = $database.Tags
         }
-        $dblist += $dbobj
+        $list += $dbobj
         Write-Host "- $($database.ServerName)/$($database.DatabaseName).. OK" -ForegroundColor Green
     }
 }
-$nonPooled = $dblist | Where-Object { $_.ElasticPool -eq $null }
+$nonPooled = $list | Where-Object { $_.ElasticPool -eq $null }
 Write-Output "Number of non-pooled SQL dbs: $($nonPooled.Count)"
 
-$isZR = $dblist | Where-Object { $_.isZoneRedundant }
+$isZR = $list | Where-Object { $_.isZoneRedundant }
 Write-Output "Number of zone-redundant SQL dbs: $($isZR.Count)"
 
-$isGeo = $dblist | Where-Object { $_.BackupRedudancy -eq "Geo" }
+$isGeo = $list | Where-Object { $_.BackupRedudancy -eq "Geo" }
 Write-Output "Number of geo-redundant SQL dbs: $($isGeo.Count)"
 
-$isTDE = $dblist | Where-Object { $_.DataEncryption -eq "Enabled" }
+$isTDE = $list | Where-Object { $_.DataEncryption -eq "Enabled" }
 Write-Output "Number of TDE encrypted dbs: $($isTDE.Count)"
 
-Write-Output "Total number of SQL dbs checked: $($dblist.Count)"
+Write-Output "Total number of SQL dbs checked: $($list.Count)"
 
 # Presents the user with a choice of saving the results to a file or display on screen
 $key = Read-Host "- Save output to a file? Choose No to only show Gridview (Y/n)"
 if ($key -eq "Y") {
-        
+    $list | Out-GridView -Title "$($context.Subscription.Name) - SqlDbProperties"
+
     # Outputs table to a file (make sure to include filename and extension)
-    $csvfile = "./PSOutputFiles/azsql_db_props.csv"
+    $csvfile = ".\PSOutputFiles\StorageAccProps.csv"
+    $xlsfile = ".\PSOutputFiles\StorageAccProps.xlsx"
 
     try {
         Write-Host "Writing file to disk..." -ForegroundColor Cyan
-        $dblist | Export-Csv -Path $csvfile -Delimiter ";"
-        Write-Host "File Saved: Output can be found under $csvfile" -ForegroundColor Green
+        #$list | Export-Csv -Path $csvfile -Delimiter ";"
+        #$list | Export-Excel -Path $xlsfile -WorksheetName "$($context.Subscription.Name)" -TableName "storageprops" -AutoSize
+        #Write-Host "Success! Output can be found under $csvfile" -ForegroundColor Green
     } catch {
         Write-Error $_.Exception.GetType().FullName
         Write-Host -ForegroundColor Yellow "Possible reason: File already open? (locked)"
@@ -125,5 +130,6 @@ if ($key -eq "Y") {
         }
     }
 } else {
-    $dblist | Out-GridView -Title "SQLDbProperties"
+    $list | Out-GridView -Title "$($context.Subscription.Name) - SqlDbProperties"
+    Write-Host -ForegroundColor Green "Script completed successfully."
 }

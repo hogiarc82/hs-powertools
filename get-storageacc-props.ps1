@@ -108,41 +108,54 @@ foreach ($sa in $storageAccounts) {
         $ext.PSObject.Properties | ForEach-Object {
             $row | Add-Member -MemberType NoteProperty -Name $_.Name -Value $_.Value
         } #>
-        
+        $netRules = @{
+            Allowed = @()
+            Denied  = @()
+        }        
         if ($sa.NetworkRuleSet.VirtualNetworkRules.Count -gt 0) {
-            $netProps = @()
             foreach ($rule in $sa.NetworkRuleSet.VirtualNetworkRules) {
-                $vnetResId = $rule.VirtualNetworkResourceId -split "/"
-                $vnets = $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
-                $netProps += $rule.Action.ToString() + ": " + $vnets
+                switch ($rule.Action) {
+                    'Allow' { 
+                        $vnetResId = $rule.VirtualNetworkResourceId -split "/"
+                        $netRules['Allowed'] += $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
+                    }
+                    'Deny' { 
+                        $vnetResId = $rule.VirtualNetworkResourceId -split "/"
+                        $netRules['Denied'] += $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
+                    }
+                    default {
+                        $netRules = $null
+                    }
+                }
             }
-            $virtualNetworks = $netProps | ConvertTo-Json
         }
-        $IPRuleSet = @{
+        $ipRuleSet = @{
             Allowed = @()
             Denied  = @()
         }
         if ($sa.NetworkRuleSet.IpRules.Count -gt 0) {
-            $i = 0;
             foreach ($rule in $sa.NetworkRuleSet.IpRules) {
-                $ruleAction = $sa.NetworkRuleSet.IpRules[$i].Action
+                $ruleAction = $rule.Action
                 switch ($ruleAction) {
-                    "Allow" { 
-                        $IPRuleSet['Allowed'] += $sa.NetworkRuleSet.IpRules[$i].IPAddressOrRange 
+                    'Allow' { 
+                        $ipRuleSet['Allowed'] += $rule.IPAddressOrRange 
                     }
-                    "Deny" { 
-                        $IPRuleSet['Denied'] += $sa.NetworkRuleSet.IpRules[$i].IPAddressOrRange 
+                    'Deny' { 
+                        $ipRuleSet['Denied'] += $rule.IPAddressOrRange 
+                    }
+                    default {
+                        $ipRuleSet = $null
                     }
                 }
-                $i++;
             }
         }
 
         # adding fields related to network access and perimeter security, etc.
-        $row | Add-Member -MemberType NoteProperty -Name 'AllowIPRule' -Value $IPRuleSet['Allowed']
-        $row | Add-Member -MemberType NoteProperty -Name 'DenyIPRule' -Value $IPRuleSet['Denied']
-        $row | Add-Member -MemberType NoteProperty -Name 'VirtualNetRules' -Value $virtualNetworks
-        $row | Add-Member -MemberType NoteProperty -Name 'ResAccRules' -Value $sa.NetworkRuleSet.ResourceAccessRules
+        #$row | Add-Member -MemberType NoteProperty -Name 'ResAccRules' -Value $sa.NetworkRuleSet.ResourceAccessRules
+        $row | Add-Member -MemberType NoteProperty -Name 'AllowIPRule' -Value $ipRuleSet['Allowed']
+        #$row | Add-Member -MemberType NoteProperty -Name 'DenyIPRule' -Value $ipRuleSet['Denied']
+        $row | Add-Member -MemberType NoteProperty -Name 'AllowedVNets' -Value $netRules['Allowed']
+        #$row | Add-Member -MemberType NoteProperty -Name 'DeniedVNets' -Value $netRules['Denied']
         $row | Add-Member -MemberType NoteProperty -Name 'DefaultAction' -Value $sa.NetworkRuleSet.DefaultAction
         $row | Add-Member -MemberType NoteProperty -Name 'ByPassAllowed' -Value $sa.NetworkRuleSet.Bypass
         $row | Add-Member -MemberType NoteProperty -Name 'EnableHttpsOnly' -Value $sa.EnableHttpsTrafficOnly
@@ -162,16 +175,17 @@ Write-Host $list.Count"storage accounts processed. ($skipCount skipped)" -Foregr
 # Presents the user with a choice of saving the results to a file or display on screen
 $key = Read-Host "- Save output to a file? Choose No to only show Gridview (Y/n)"
 if ($key -eq "Y") {
-        
+    $list | Out-GridView -Title "$($context.Subscription.Name) - StorageAccountProperties"
+
     # Outputs table to a file (make sure to include filename and extension)
     $csvfile = ".\PSOutputFiles\StorageAccProps.csv"
-    #$xlsfile = ".\PSOutputFiles\StorageAccProps.xlsx"
+    $xlsfile = ".\PSOutputFiles\StorageAccProps.xlsx"
 
     try {
         Write-Host "Writing file to disk..." -ForegroundColor Cyan
-        $list | Export-Csv -Path $csvfile -Delimiter ";"
-        #$list | Export-Excel -Path $xlsfile -WorksheetName "ExtendedProperties" -TableName "storageprops" -AutoSize
-        Write-Host "Success! Output can be found under $csvfile" -ForegroundColor Green
+        #$list | Export-Csv -Path $csvfile -Delimiter ";"
+        #$list | Export-Excel -Path $xlsfile -WorksheetName "$($context.Subscription.Name)" -TableName "storageprops" -AutoSize
+        #Write-Host "Success! Output can be found under $csvfile" -ForegroundColor Green
     } catch {
         Write-Error $_.Exception.GetType().FullName
         Write-Host -ForegroundColor Yellow "Possible reason: File already open? (locked)"
@@ -184,6 +198,6 @@ if ($key -eq "Y") {
         }
     }
 } else {
-    $list | Out-GridView -Title "StorageAccountProperties"
+    $list | Out-GridView -Title "$($context.Subscription.Name) - StorageAccountProperties"
     Write-Host -ForegroundColor Green "Script completed successfully."
 }

@@ -17,4 +17,4 @@ Resources
                 'microsoft.apimanagement/service/apis',
                 'microsoft.apimanagement/service/apis/operations')
 //| order by ['type'] asc
-| summarize TotalResouces = dcount(name) by type
+| summarize TotalResources = dcount(name) by type

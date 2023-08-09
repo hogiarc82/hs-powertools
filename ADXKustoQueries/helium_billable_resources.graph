@@ -3,8 +3,9 @@
 // NOTE: THIS QUERY WILL ONLY WORK IN AZURE RESOURCE GRAPH !!
 // This query uses "dcount" to count the number of distinct records returned.
 // The '~' in the 'type' match tells Resource Graph to be case insensitive
+////////////////////////////////////////////////////////////////////////////
 Resources
-| where subscriptionId == "6b4f88b2-db99-43b7-8cae-88444a230474" //production sub selected
+//| where subscriptionId == "6b4f88b2-db99-43b7-8cae-88444a230474" //only production sub selected
 | where type in~ ('microsoft.logic/workflows',
                 'microsoft.eventgrid/topics',
                 'microsoft.servicebus/namespaces',
@@ -17,4 +18,4 @@ Resources
                 'microsoft.apimanagement/service/apis',
                 'microsoft.apimanagement/service/apis/operations')
 //| order by ['type'] asc
-| summarize TotalResources = dcount(name) by type
+| summarize ResourceCount = dcount(name) by type

@@ -5,14 +5,14 @@
 Last modified: 2023-05-31 by roman.castro
 #
 #>
-Clear-Host
-Write-Host "============= Executing Script - Press Ctrl+C anytime to abort =============" -ForegroundColor Green
+param(
+    [switch]$Full
+)
 Import-Module Az.Storage
-
 <# A user defined function prompting user for selection from a custom menu #>
 function New-PromptSelection {
     param ()
-    $i = 0; 
+    $i = 1; 
     # Creates a list with all accessible Azure subscriptions 
     $subscriptions = New-Object System.Collections.ArrayList
     foreach ($line in Get-AzSubscription | Select-Object Name, Id) {
@@ -40,31 +40,135 @@ function New-ExtendedStorageProps {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]
-        [System.Object] $obj
+        [System.Object] $sa
     )
-    Write-Host "..." -NoNewline
-    # reads the input from the extended storage properties and selects specific properties 
-    $saProperties = [ordered] @{
-        AllowPermDelete       = $obj.DeleteRetentionPolicy.AllowPermanentDelete
-        DeleteRetentionPolicy = $obj.DeleteRetentionPolicy.Enabled
-        RetentionPolicyDays   = $obj.DeleteRetentionPolicy.Days
-        RestorePolicy         = $obj.RestorePolicy.Enabled
-        RestorePolicyDays     = $obj.RestorePolicy.Days
-        #MinRestoreTime        = $obj.RestorePolicy.MinRestoreTime
-        #LoggingOperations     = $obj.Logging.LoggingOperations           
-        #LogRetentionDays      = $obj.Logging.RetentionDays
-        ChangedFeedEnabled    = $obj.ChangeFeed.Enabled
-        VersioningEnabled     = $obj.IsVersioningEnabled
+    $obj = Get-AzStorageBlobServiceProperty -StorageAccount $sa
+    # calls the extended storage properties cmdlet and select which properties to read
+    $extProperties = [ordered] @{
+        AllowPermDelete     = $obj.DeleteRetentionPolicy.AllowPermanentDelete
+        DeleteRetention     = $obj.DeleteRetentionPolicy.Enabled
+        RetentionPolicyDays = $obj.DeleteRetentionPolicy.Days
+        RestorePolicy       = $obj.RestorePolicy.Enabled
+        RestorePolicyDays   = $obj.RestorePolicy.Days
+        #MinRestoreTime         = $obj.RestorePolicy.MinRestoreTime
+        #LoggingOperations      = $obj.Logging.LoggingOperations           
+        #LogRetentionDays       = $obj.Logging.RetentionDays
+        ChangedFeed         = $obj.ChangeFeed.Enabled
+        Versioning          = $obj.IsVersioningEnabled
     }
-    return (New-Object PSObject -Property $saProperties)
+    return (New-Object PSObject -Property $extProperties)
 }
+function Get-StorageProperties {
+    # retrieve all storage accounts in the subscription
+    $storageAccounts = Get-AzStorageAccount
+    Write-Host "Retrieving and processing storage account properties..." -ForegroundColor Cyan
+    # creates a master list for storing the storage account properties
+    [System.Collections.ArrayList]$list = New-Object -TypeName System.Collections.ArrayList
+
+    foreach ($sa in $storageAccounts) {
+        # skips all storage accounts connected to cloud-shell, webjobs, etc.
+        if ($sa.StorageAccountName -notlike "webjob*" -and $sa.ResourceGroupName -notlike "cloud-shell-storage*") {
+            Write-Host "Loading"$sa.StorageAccountName -NoNewline
+
+            # create new table row to store information about the storage account
+            $row = New-Object PSObject
+            #$row | Add-Member -MemberType NoteProperty -Name 'Subscription' -Value $context.Subscription.Name
+            $row | Add-Member -MemberType NoteProperty -Name 'DateCreatedOn' -Value $sa.CreationTime
+            $row | Add-Member -MemberType NoteProperty -Name 'ResourceGroupName' -Value $sa.ResourceGroupName
+            $row | Add-Member -MemberType NoteProperty -Name 'StorageAccountName' -Value $sa.StorageAccountName
+            
+            # retrieves storage account tags and adds them as fields (columns)
+            $tags = "company", "team"
+            foreach ($key in $sa.Tags.Keys) {
+                $value = $sa.Tags[$key]
+                if ($key -in $tags) {
+                    $row | Add-Member -MemberType NoteProperty -Name $key -Value $value
+                }
+            }
+    
+            Write-Host "..." -NoNewline
+            $row | Add-Member -MemberType NoteProperty -Name 'Type' -Value $sa.Kind
+            $row | Add-Member -MemberType NoteProperty -Name 'AccessTier' -Value $sa.AccessTier
+            $row | Add-Member -MemberType NoteProperty -Name 'SKU' -Value $sa.Sku.Name
+            $row | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
+
+            # calls a custom defined function to retrieve extended storage properties (if switched)
+            if ($Full) {
+                $ext = New-ExtendedStorageProps($sa)
+                $ext.PSObject.Properties | ForEach-Object {
+                    $row | Add-Member -MemberType NoteProperty -Name $_.Name -Value $_.Value
+                }
+            }
+            $row | Add-Member -MemberType NoteProperty -Name 'AllowSharedKey' -Value $sa.AllowSharedKeyAccess
+            $row | Add-Member -MemberType NoteProperty -Name 'AllowCrossTenant' -Value $sa.AllowCrossTenantReplication
+            $row | Add-Member -MemberType NoteProperty -Name 'BlobPublicAccess' -Value $sa.AllowBlobPublicAccess
+            $row | Add-Member -MemberType NoteProperty -Name 'EnableHttpsOnly' -Value $sa.EnableHttpsTrafficOnly
+
+            # Extract the NetworkRuleSet properties for the storage account
+            $netRules = @{
+                Allowed = @()
+                Denied  = @()
+            }
+            if ($sa.NetworkRuleSet.VirtualNetworkRules.Count -gt 0) {
+
+                foreach ($rule in $sa.NetworkRuleSet.VirtualNetworkRules) {
+                    $vnetResId = $rule.VirtualNetworkResourceId -split "/"
+                    $vnet = $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
+
+                    switch ($rule.Action) {
+                        'Allow' {
+                            $netRules['Allowed'] += $vnet
+                        }
+                        'Deny' {
+                            $netRules['Denied'] += $vnet
+                        }
+                    }
+                }
+            }
+            # Extract the IP address rules from the storage account NetworkRuleSet
+            $ipRuleSet = @{
+                Allowed = @()
+                Denied  = @()
+            }
+            if ($sa.NetworkRuleSet.IpRules.Count -gt 0) {
+                foreach ($rule in $sa.NetworkRuleSet.IpRules) {
+                    $ruleAction = $rule.Action
+                    switch ($ruleAction) {
+                        'Allow' { 
+                            $ipRuleSet['Allowed'] += $rule.IPAddressOrRange 
+                        }
+                        'Deny' { 
+                            $ipRuleSet['Denied'] += $rule.IPAddressOrRange 
+                        }
+                    }
+                }
+            }
+
+            # adding fields related to storage account network access properties and other security, etc.
+            #$row | Add-Member -MemberType NoteProperty -Name 'ResourceAccess' -Value $sa.NetworkRuleSet.ResourceAccessRules
+            #$row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess## DO NOT USE
+            $row | Add-Member -MemberType NoteProperty -Name 'ByPassAllowed' -Value $sa.NetworkRuleSet.Bypass
+            $row | Add-Member -MemberType NoteProperty -Name 'DefaultAction' -Value $sa.NetworkRuleSet.DefaultAction
+            $row | Add-Member -MemberType NoteProperty -Name 'AllowedIPRules' -Value $ipRuleSet['Allowed']
+            $row | Add-Member -MemberType NoteProperty -Name 'AllowedVNets' -Value $netRules['Allowed']
+            #$row | Add-Member -MemberType NoteProperty -Name 'DeniedIPRules' -Value $ipRuleSet['Denied']
+            #$row | Add-Member -MemberType NoteProperty -Name 'DeniedVNets' -Value $netRules['Denied']
+            # adds the row and populates the master table
+            $list.Add($row) | Out-Null
+            Write-Host "OK"
+        }
+    }
+    $skipCount = $storageAccounts.Count-$list.Count
+    Write-Host $list.Count"storage accounts processed. ($skipCount skipped)" -ForegroundColor Yellow
+    return $list
+}
+# Starts the main script process...
+Write-Host "============= Executing Script - Press Ctrl+C anytime to abort =============" -ForegroundColor Green
 
 $context = Get-AzContext
-# calls Azure RM and returns information about current context
 Write-Host -ForegroundColor Yellow "The current subscription is:"$context.Subscription.Name
-Write-Host "NB! This script requires appropriate permissions to the env." -ForegroundColor Cyan
 
-# presents user with a choice to either continue with current context or select a new
+# presents user with a choice to continue in current context or select another subscription
 $key = Read-Host "- Do you want to continue to run the script in current context? (Y/n)"
 if ($key -ne "Y") {
     Write-Host "Loading selection menu..." -ForegroundColor Cyan
@@ -72,110 +176,13 @@ if ($key -ne "Y") {
     $context = Set-AzContext -Subscription $selection.Id
     Write-Host "You have selected a new context:" $selection.Name -ForegroundColor Yellow
 }
-# creates a master list (table) for storing all of the storage account properties
-[System.Collections.ArrayList]$list = New-Object -TypeName System.Collections.ArrayList
-
-# calls Azure RM and returns all storage accounts in the selected subscription
-$storageAccounts = Get-AzStorageAccount
-Write-Host "Retrieving and processing storage account properties..." -ForegroundColor Cyan
-foreach ($sa in $storageAccounts) {
-    # skips all storage accounts connected to cloud-shell, webjobs, etc.
-    if ($sa.StorageAccountName -notlike "webjob*" -and $sa.ResourceGroupName -notlike "cloud-shell-storage*") {
-        Write-Host "Loading"$sa.StorageAccountName -NoNewline
-        
-        $row = New-Object PSObject
-        # adding fields in a row with all mandatory storage account properties
-        $row | Add-Member -MemberType NoteProperty -Name 'Subscription' -Value $context.Subscription.Name
-        $row | Add-Member -MemberType NoteProperty -Name 'StorageAccount' -Value $sa.StorageAccountName
-        $row | Add-Member -MemberType NoteProperty -Name 'ResourceGroup' -Value $sa.ResourceGroupName
-        
-        Write-Host "..." -NoNewline
-        # retrieves storage account tags and adds them as fields (columns)
-        $acceptKeys = "company", "team"
-        foreach ($key in $sa.Tags.Keys) {
-            $value = $sa.Tags[$key]
-            if ($key -in $acceptKeys) {
-                $row | Add-Member -MemberType NoteProperty -Name $key -Value $value
-            }
-        }
-        $row | Add-Member -MemberType NoteProperty -Name 'Type' -Value $sa.Kind
-        $row | Add-Member -MemberType NoteProperty -Name 'AccessTier' -Value $sa.AccessTier
-        $row | Add-Member -MemberType NoteProperty -Name 'SKU' -Value $sa.Sku.Name
-        $row | Add-Member -MemberType NoteProperty -Name 'Location' -Value $sa.PrimaryLocation
-
-        <#         # calls a custom defined function to retrieve extended storage properties //broken
-        $ext = New-ExtendedStorageProps(Get-AzStorageBlobServiceProperty -StorageAccount $sa)
-        $ext.PSObject.Properties | ForEach-Object {
-            $row | Add-Member -MemberType NoteProperty -Name $_.Name -Value $_.Value
-        } #>
-        $netRules = @{
-            Allowed = @()
-            Denied  = @()
-        }        
-        if ($sa.NetworkRuleSet.VirtualNetworkRules.Count -gt 0) {
-            foreach ($rule in $sa.NetworkRuleSet.VirtualNetworkRules) {
-                switch ($rule.Action) {
-                    'Allow' { 
-                        $vnetResId = $rule.VirtualNetworkResourceId -split "/"
-                        $netRules['Allowed'] += $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
-                    }
-                    'Deny' { 
-                        $vnetResId = $rule.VirtualNetworkResourceId -split "/"
-                        $netRules['Denied'] += $vnetResId[-3]+"/"+$vnetResId[-2]+"/"+$vnetResId[-1]+"/"+$vnetResId[0]
-                    }
-                    default {
-                        $netRules = $null
-                    }
-                }
-            }
-        }
-        $ipRuleSet = @{
-            Allowed = @()
-            Denied  = @()
-        }
-        if ($sa.NetworkRuleSet.IpRules.Count -gt 0) {
-            foreach ($rule in $sa.NetworkRuleSet.IpRules) {
-                $ruleAction = $rule.Action
-                switch ($ruleAction) {
-                    'Allow' { 
-                        $ipRuleSet['Allowed'] += $rule.IPAddressOrRange 
-                    }
-                    'Deny' { 
-                        $ipRuleSet['Denied'] += $rule.IPAddressOrRange 
-                    }
-                    default {
-                        $ipRuleSet = $null
-                    }
-                }
-            }
-        }
-
-        # adding fields related to network access and perimeter security, etc.
-        #$row | Add-Member -MemberType NoteProperty -Name 'ResAccRules' -Value $sa.NetworkRuleSet.ResourceAccessRules
-        $row | Add-Member -MemberType NoteProperty -Name 'AllowIPRule' -Value $ipRuleSet['Allowed']
-        #$row | Add-Member -MemberType NoteProperty -Name 'DenyIPRule' -Value $ipRuleSet['Denied']
-        $row | Add-Member -MemberType NoteProperty -Name 'AllowedVNets' -Value $netRules['Allowed']
-        #$row | Add-Member -MemberType NoteProperty -Name 'DeniedVNets' -Value $netRules['Denied']
-        $row | Add-Member -MemberType NoteProperty -Name 'DefaultAction' -Value $sa.NetworkRuleSet.DefaultAction
-        $row | Add-Member -MemberType NoteProperty -Name 'ByPassAllowed' -Value $sa.NetworkRuleSet.Bypass
-        $row | Add-Member -MemberType NoteProperty -Name 'EnableHttpsOnly' -Value $sa.EnableHttpsTrafficOnly
-        $row | Add-Member -MemberType NoteProperty -Name 'BlobPublicAccess' -Value $sa.AllowBlobPublicAccess
-        $row | Add-Member -MemberType NoteProperty -Name 'AllowSharedKey' -Value $sa.AllowSharedKeyAccess
-        $row | Add-Member -MemberType NoteProperty -Name 'AllowCrossTenant' -Value $sa.AllowCrossTenantReplication
-        #$row | Add-Member -MemberType NoteProperty -Name 'PublicNetAccess' -Value $sa.PublicNetworkAccess ## DO NOT USE! //unrealiable
-
-        # adds the entire row to the master list (table)
-        $list.Add($row) | Out-Null
-        Write-Host "OK"
-    }
-}
-$skipCount = $storageAccounts.Count-$list.Count
-Write-Host $list.Count"storage accounts processed. ($skipCount skipped)" -ForegroundColor Yellow
+# Main function runs here...
+$table = Get-StorageProperties
 
 # Presents the user with a choice of saving the results to a file or display on screen
 $key = Read-Host "- Save output to a file? Choose No to only show Gridview (Y/n)"
 if ($key -eq "Y") {
-    $list | Out-GridView -Title "$($context.Subscription.Name) - StorageAccountProperties"
+    $table | Out-GridView -Title "$($context.Subscription.Name) - StorageAccountProperties"
 
     # Outputs table to a file (make sure to include filename and extension)
     $csvfile = ".\PSOutputFiles\StorageAccProps.csv"
@@ -183,8 +190,8 @@ if ($key -eq "Y") {
 
     try {
         Write-Host "Writing file to disk..." -ForegroundColor Cyan
-        #$list | Export-Csv -Path $csvfile -Delimiter ";"
-        #$list | Export-Excel -Path $xlsfile -WorksheetName "$($context.Subscription.Name)" -TableName "storageprops" -AutoSize
+        #$table | Export-Csv -Path $csvfile -Delimiter ";"
+        #$table | Export-Excel -Path $xlsfile -WorksheetName "$($context.Subscription.Name)" -TableName "storageprops" -AutoSize
         #Write-Host "Success! Output can be found under $csvfile" -ForegroundColor Green
     } catch {
         Write-Error $_.Exception.GetType().FullName
@@ -198,6 +205,6 @@ if ($key -eq "Y") {
         }
     }
 } else {
-    $list | Out-GridView -Title "$($context.Subscription.Name) - StorageAccountProperties"
+    $table | Out-GridView -Title "$($context.Subscription.Name) - StorageAccountProperties"
     Write-Host -ForegroundColor Green "Script completed successfully."
 }

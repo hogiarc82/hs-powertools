@@ -36,7 +36,6 @@ function New-PromptSelection {
     # Returns the selected subscription
     return $subscriptions[$selectedSubscriptionIndex]
 }
-<# A user defined function for reading the StorageBlobServiceProperty as input #>
 
 $selection = New-PromptSelection
 Write-Host $selection
@@ -48,8 +47,7 @@ foreach ($asp in $serviceplans) {
     $apps = Get-AzWebApp -AppServicePlan $asp
     
     foreach ($app in $apps) {
-        Get-AzWebApp
+        ## TODO: Add some more logic to make this work
         Set-AzWebApp -Name $app.Name -ResourceGroupName $app.ResourceGroup -FtpsState Disabled
     }
 }
-

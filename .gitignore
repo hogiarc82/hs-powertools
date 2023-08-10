@@ -1,7 +1,9 @@
 PSOutputFiles/~$StorageAccProps.xlsx
-__azurite_db_table__.json
 HSPowerTools.code-workspace
+Dockerfile
 .vscode/settings.json
 .vscode/launch.json
 __azurite_db_queue__.json
 __azurite_db_queue_extent__.json
+__azurite_db_table__.json
+.dockerignore

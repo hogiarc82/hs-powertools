@@ -60,7 +60,7 @@ $server = Get-AzSqlServer | Where-Object SqlAdministratorLogin -Match "hogiadba"
 $dbs = Get-AzSqlDatabase -ServerName $server.ServerName -ResourceGroupName $server.ResourceGroupName
 
 ## then loop through the list of databases and select the relevant properties
-$list = $dbs | ForEach-Object -Parallel {
+$list = $dbs | ForEach-Object -ThrottleLimit 12 -Parallel {
     $database = $_
     if ("master" -eq $database.DatabaseName) {
         Write-Host "Skipping $($database.DatabaseName)..." -ForegroundColor Red
@@ -73,12 +73,29 @@ $list = $dbs | ForEach-Object -Parallel {
         } catch {
             Write-Warning -Message "$($database.DatabaseName) could not provide extended properties"
         }
+        
+        # retrieves the relevant tags from the object
+        $tags = @{}
+        foreach ($key in $database.Tags.Keys) {
+            switch ($key) {
+                "company" {
+                    $value = $database.Tags[$key]
+                    $tags.Add($key, $value)
+                }
+                "team" {
+                    $value = $database.Tags[$key]
+                    $tags.Add($key, $value)
+                }
+            }
+        }
         $dbobj = [pscustomobject]@{
-            Subscription     = $using:context.Subscription.Name
+            #Subscription     = $using:context.Subscription.Name
             ResourceGroup    = $database.ResourceGroupName
             ServerName       = $database.ServerName
             Location         = $database.Location
             DatabaseName     = $database.DatabaseName
+            Company          = $tags['company']
+            Team             = $tags['team']
             ElasticPool      = $database.ElasticPoolName
             MaxSizeBytesGB   = $database.MaxSizeBytes / (1024 * 1024 * 1024)
             isZoneRedundant  = $database.ZoneRedundant
@@ -86,8 +103,8 @@ $list = $dbs | ForEach-Object -Parallel {
             RetentionDays    = $dbSTR.RetentionDays
             DataEncryption   = $dbTDE.State
             DataMasking      = $dbDMS.DataMaskingState
-            PublicNetAccess  = $using:server.PublicNetworkAccess
-            Tags             = $database.Tags
+            #PublicNetAccess  = $using:server.PublicNetworkAccess
+            #Tags             = $database.Tags
         }
         Write-Host "- $($database.ServerName)/$($database.DatabaseName).. OK" -ForegroundColor Green
         return $dbobj
@@ -117,17 +134,46 @@ if ($key -eq "Y") {
     $filepath = ".\PSOutputFiles\"
     # Outputs table to a file (depending on output param)
     switch ($Output) {
-        'csv' { $filename = $filepath + "StorageAccProps.csv" }
-        'xls' { $filename = $filepath + "StorageAccProps.xlsx" }
-        default { $filename = $null}
+        'csv' {
+            $filename = $filepath+"AzSqlAccProps.csv" 
+        }
+        'xls' {
+            $filename = $filepath+"AzSqlAccProps.xlsx" 
+        }
+        "csv" {
+            $filename = $filepath+"AzSqlAccProps.csv" 
+        }
+        "xls" {
+            $filename = $filepath+"AzSqlAccProps.xlsx" 
+        }
+        default {
+            $filename = $false
+        }
     }
-    if (!$Output && !$filename) {
+    if (!$filename) {
         Write-Error "No file file extension type defined at runtime. Please use the [-Output] switch!"
-    }
-    elseif ($filename -match ".csv") {
-        $list | Export-Csv -Path $filename -Delimiter ";"
-    }
-    elseif ($filename -match ".xlsx") {
-        $list | Export-Excel -Path $filename -WorksheetName "$($context.Subscription.Name)" -TableName "storageprops" -AutoSize
+    } else {
+        try {
+            Write-Host "Writing file to disk..." -ForegroundColor Yellow
+            if ($filename -match ".csv") {
+                $list | Export-Csv -Path $filename -Delimiter ";" 
+            }
+            if ($filename -match ".xlsx") {
+                $list | Export-Excel -Path $filename -WorksheetName "$($context.Subscription.Name)" -TableName "storageprops" -AutoSize 
+            } else {
+                $filenname = "something went wrong at the try/catch block"
+            }
+            Write-Host "Success! Output can be found under: "$filepath -ForegroundColor Green
+        } catch {
+            Write-Error $_.Exception.GetType().FullName
+            Write-Host -ForegroundColor Yellow "Possible reason: File already open? (locked)"
+            $LASTEXITCODE = 1
+        } finally {
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host -ForegroundColor Green "Script completed successfully." 
+            } else {
+                Write-Host -ForegroundColor Cyan "Script finished with exit code: $LASTEXITCODE" 
+            }
+        }
     }
 }

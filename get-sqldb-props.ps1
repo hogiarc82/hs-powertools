@@ -59,13 +59,12 @@ $server = Get-AzSqlServer | Where-Object SqlAdministratorLogin -Match "hogiadba"
 ## get a list of all databases on a server by specifying ResourceGroupName and ServerName
 $dbs = Get-AzSqlDatabase -ServerName $server.ServerName -ResourceGroupName $server.ResourceGroupName
 
-$list = @()
 ## then loop through the list of databases and select the relevant properties
-foreach ($database in $dbs) {
+$list = $dbs | ForEach-Object -Parallel {
+    $database = $_
     if ("master" -eq $database.DatabaseName) {
-        Write-Host "Skipping $($database.DatabaseName)..."
-    }
-    else {
+        Write-Host "Skipping $($database.DatabaseName)..." -ForegroundColor Red
+    } else {
         Write-Host "Processing $($database.DatabaseName)"
         try { 
             $dbDMS = $database | Get-AzSqlDatabaseDataMaskingPolicy
@@ -75,7 +74,7 @@ foreach ($database in $dbs) {
             Write-Warning -Message "$($database.DatabaseName) could not provide extended properties"
         }
         $dbobj = [pscustomobject]@{
-            Subscription     = $context.Subscription.Name
+            Subscription     = $using:context.Subscription.Name
             ResourceGroup    = $database.ResourceGroupName
             ServerName       = $database.ServerName
             Location         = $database.Location
@@ -87,13 +86,14 @@ foreach ($database in $dbs) {
             RetentionDays    = $dbSTR.RetentionDays
             DataEncryption   = $dbTDE.State
             DataMasking      = $dbDMS.DataMaskingState
-            PublicNetAccess  = $server.PublicNetworkAccess
+            PublicNetAccess  = $using:server.PublicNetworkAccess
             Tags             = $database.Tags
         }
-        $list += $dbobj
         Write-Host "- $($database.ServerName)/$($database.DatabaseName).. OK" -ForegroundColor Green
+        return $dbobj
     }
 }
+
 $nonPooled = $list | Where-Object { $_.ElasticPool -eq $null }
 Write-Output "Number of non-pooled SQL dbs: $($nonPooled.Count)"
 
@@ -122,7 +122,7 @@ if ($key -eq "Y") {
         default { $filename = $null}
     }
     if (!$Output && !$filename) {
-        Write-Host "No file file extension type defined at runtime. Please use the [-Output] switch!"
+        Write-Error "No file file extension type defined at runtime. Please use the [-Output] switch!"
     }
     elseif ($filename -match ".csv") {
         $list | Export-Csv -Path $filename -Delimiter ";"

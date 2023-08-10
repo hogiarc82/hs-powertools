@@ -5,8 +5,11 @@
 Last modified: 2023-05-31 by roman.castro
 #
 #>
-Clear-Host
-Write-Host "============= Executing Script - Press Ctrl+C anytime to abort =============" -ForegroundColor Green
+param (
+    [Parameter()]
+    [ValidateSet("csv", "xls")]
+    [string]$Output
+)
 Import-Module Az.Storage
 
 <# A user defined function prompting user for selection from a custom menu #>
@@ -35,7 +38,8 @@ function New-PromptSelection {
     # Returns the selected subscription
     return $subscriptions[$selectedSubscriptionIndex]
 }
-
+Clear-Host
+Write-Host "============= Executing Script - Press Ctrl+C anytime to abort =============" -ForegroundColor Green
 $context = Get-AzContext
 # calls Azure RM and returns information about current context
 Write-Host -ForegroundColor Yellow "The current subscription is:"$context.Subscription.Name
@@ -110,27 +114,20 @@ $key = Read-Host "- Save output to a file? Choose No to only show Gridview (Y/n)
 if ($key -eq "Y") {
     $list | Out-GridView -Title "$($context.Subscription.Name) - SqlDbProperties"
 
-    # Outputs table to a file (make sure to include filename and extension)
-    $csvfile = ".\PSOutputFiles\StorageAccProps.csv"
-    $xlsfile = ".\PSOutputFiles\StorageAccProps.xlsx"
-
-    try {
-        Write-Host "Writing file to disk..." -ForegroundColor Cyan
-        #$list | Export-Csv -Path $csvfile -Delimiter ";"
-        #$list | Export-Excel -Path $xlsfile -WorksheetName "$($context.Subscription.Name)" -TableName "storageprops" -AutoSize
-        #Write-Host "Success! Output can be found under $csvfile" -ForegroundColor Green
-    } catch {
-        Write-Error $_.Exception.GetType().FullName
-        Write-Host -ForegroundColor Yellow "Possible reason: File already open? (locked)"
-        $LASTEXITCODE = 1
-    } finally {
-        if ($LASTEXITCODE -eq 0) {
-            Write-Host -ForegroundColor Green "Script completed successfully."
-        } else {
-            Write-Host -ForegroundColor Cyan "Script finished with exit code: $LASTEXITCODE"
-        }
+    $filepath = ".\PSOutputFiles\"
+    # Outputs table to a file (depending on output param)
+    switch ($Output) {
+        'csv' { $filename = $filepath + "StorageAccProps.csv" }
+        'xls' { $filename = $filepath + "StorageAccProps.xlsx" }
+        default { $filename = $null}
     }
-} else {
-    $list | Out-GridView -Title "$($context.Subscription.Name) - SqlDbProperties"
-    Write-Host -ForegroundColor Green "Script completed successfully."
+    if (!$Output && !$filename) {
+        Write-Host "No file file extension type defined at runtime. Please use the [-Output] switch!"
+    }
+    elseif ($filename -match ".csv") {
+        $list | Export-Csv -Path $filename -Delimiter ";"
+    }
+    elseif ($filename -match ".xlsx") {
+        $list | Export-Excel -Path $filename -WorksheetName "$($context.Subscription.Name)" -TableName "storageprops" -AutoSize
+    }
 }

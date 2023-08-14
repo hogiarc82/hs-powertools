@@ -1,8 +1,8 @@
 <#
-##############################################################################
-# NOTE: THIS SCRIPT WILL NOT CHANGE ANY SYSTEM PROPERTIES IN THE ENVIRONMENT #
-##############################################################################
-Last modified: 2023-05-31 by roman.castro
+.SYNOPSIS Get-StorageAccProps: Returns a list of storage account properties
+.DESCRIPTION
+.INPUTS
+.PARAMETER Full a simple switch that takes no arguments
 #
 #>
 param(
@@ -72,6 +72,7 @@ function Get-StorageProperties {
 
             # create new table row to store information about the storage account
             $row = New-Object PSObject
+            
             #$row | Add-Member -MemberType NoteProperty -Name 'Subscription' -Value $context.Subscription.Name
             $row | Add-Member -MemberType NoteProperty -Name 'DateCreatedOn' -Value $sa.CreationTime
             $row | Add-Member -MemberType NoteProperty -Name 'ResourceGroupName' -Value $sa.ResourceGroupName

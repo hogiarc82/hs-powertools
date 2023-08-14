@@ -1,8 +1,8 @@
 <#
-##############################################################################
-# NOTE: THIS SCRIPT WILL NOT CHANGE ANY SYSTEM PROPERTIES IN THE ENVIRONMENT #
-##############################################################################
-Last modified: 2023-05-31 by roman.castro
+.SYNOPSIS
+.DESCRIPTION
+.INPUTS
+.PARAMETER Output needs to be specified in order to output results to a file.
 #
 #>
 param (
@@ -60,7 +60,7 @@ $server = Get-AzSqlServer | Where-Object SqlAdministratorLogin -Match "hogiadba"
 $dbs = Get-AzSqlDatabase -ServerName $server.ServerName -ResourceGroupName $server.ResourceGroupName
 
 ## then loop through the list of databases and select the relevant properties
-$list = $dbs | ForEach-Object -ThrottleLimit 12 -Parallel {
+$list = $dbs | ForEach-Object -ThrottleLimit 10 -Parallel {
     $database = $_
     if ("master" -eq $database.DatabaseName) {
         Write-Host "Skipping $($database.DatabaseName)..." -ForegroundColor Red
@@ -89,13 +89,12 @@ $list = $dbs | ForEach-Object -ThrottleLimit 12 -Parallel {
             }
         }
         $dbobj = [pscustomobject]@{
-            #Subscription     = $using:context.Subscription.Name
+            Subscription     = $using:context.Subscription.Name
             ResourceGroup    = $database.ResourceGroupName
-            ServerName       = $database.ServerName
-            Location         = $database.Location
-            DatabaseName     = $database.DatabaseName
             Company          = $tags['company']
             Team             = $tags['team']
+            ServerName       = $database.ServerName
+            DatabaseName     = $database.DatabaseName
             ElasticPool      = $database.ElasticPoolName
             MaxSizeBytesGB   = $database.MaxSizeBytes / (1024 * 1024 * 1024)
             isZoneRedundant  = $database.ZoneRedundant
@@ -103,8 +102,9 @@ $list = $dbs | ForEach-Object -ThrottleLimit 12 -Parallel {
             RetentionDays    = $dbSTR.RetentionDays
             DataEncryption   = $dbTDE.State
             DataMasking      = $dbDMS.DataMaskingState
-            #PublicNetAccess  = $using:server.PublicNetworkAccess
-            #Tags             = $database.Tags
+            Location         = $database.Location
+            PublicNetAccess  = $using:server.PublicNetworkAccess
+            Tags             = $database.Tags
         }
         Write-Host "- $($database.ServerName)/$($database.DatabaseName).. OK" -ForegroundColor Green
         return $dbobj
@@ -138,12 +138,6 @@ if ($key -eq "Y") {
             $filename = $filepath+"AzSqlAccProps.csv" 
         }
         'xls' {
-            $filename = $filepath+"AzSqlAccProps.xlsx" 
-        }
-        "csv" {
-            $filename = $filepath+"AzSqlAccProps.csv" 
-        }
-        "xls" {
             $filename = $filepath+"AzSqlAccProps.xlsx" 
         }
         default {

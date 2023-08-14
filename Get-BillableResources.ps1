@@ -9,7 +9,7 @@ if (!$filename) {
 $query = Get-Content $filename -Raw
 if ($query) {
     $total = 0;
-    #run the query (requires module 'Az.ResourceGraph')
+    #run the query
     $result = Search-AzGraph -Query $query
     foreach ($i in $result.Data.toArray()) {
         $total += $i.ResourceCount 

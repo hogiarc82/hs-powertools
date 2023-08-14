@@ -42,29 +42,40 @@ if ($key -ne "Y") {
 }
 # getting a list of available function apps
 Write-Host "Getting available function apps... This may take a while" -ForegroundColor Yellow
-$FunctionApps = Get-AzFunctionApp
+try {
+    $FunctionApps = Get-AzFunctionApp    
+} catch {
+    <#Do this if a terminating exception happens#>
+}
 
 $appInfo = @{}
+
+
+############## LOOP IS BROKEN AND NEEDS FIXING ###############
 
 # process the version info}mation for each function app
 foreach ($app in $FunctionApps) {
 
     # Query the web app for versions
-    Write-Progress "Querying web app $app"
+    Write-Progress "Querying web app: "$app.Name
     #$appConfig = (az webapp show -n $app -g $group --query "{java:siteConfig.javaversion,netFramework:siteConfig.netFrameworkVersion,php:siteConfig.phpVersion,python:siteConfig.pythonVersion,linux:siteConfig.linuxFxVersion}") | ConvertFrom-Json
-
-    $obj = [PSCustomObject]@{
-        Subscription    = $context.Subscription.Name
-        AppServicePlan  = $app.AppServicePlan
-        ResourceGroup   = $app.ResourceGroupName
-        AppName         = $app.Name
-        Status          = $app.Status
-        OSType          = $app.OSType
-        # Environment     = $app.ApplicationSettings['ASPNETCORE_ENVIRONMENT']
-        Runtime         = $app.ApplicationSettings['FUNCTIONS_WORKER_RUNTIME']
-        Version         = $app.ApplicationSettings['FUNCTIONS_EXTENSION_VERSION'].TrimStart("~")
+    try {
+        $obj = [PSCustomObject]@{
+            Subscription   = $context.Subscription.Name
+            AppServicePlan = $app.AppServicePlan
+            ResourceGroup  = $app.ResourceGroupName
+            AppName        = $app.Name
+            Status         = $app.Status
+            OSType         = $app.OSType
+            # Environment     = $app.ApplicationSettings['ASPNETCORE_ENVIRONMENT']
+            Runtime        = $app.ApplicationSettings['FUNCTIONS_WORKER_RUNTIME']
+            Version        = $app.ApplicationSettings['FUNCTIONS_EXTENSION_VERSION'].TrimStart("~")
+        }
+        $appInfo.Add($obj) | Out-Null
+    } catch {
+        <#Do this if a terminating exception happens#>
     }
-    $appInfo.Add($obj) | Out-Null
+    Write-Host "- Processed "$obj.AppName -ForegroundColor Cyan
 }
 
 # display the version information for each function app in a new window

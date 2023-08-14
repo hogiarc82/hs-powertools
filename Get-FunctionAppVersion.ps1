@@ -41,12 +41,17 @@ if ($key -ne "Y") {
     Write-Host "You have selected a new context:" $selection.Name -ForegroundColor Yellow
 }
 # getting a list of available function apps
+Write-Host "Getting available function apps... This may take a while" -ForegroundColor Yellow
 $FunctionApps = Get-AzFunctionApp
 
 $appInfo = @{}
 
 # process the version info}mation for each function app
 foreach ($app in $FunctionApps) {
+
+    # Query the web app for versions
+    Write-Progress "Querying web app $app"
+    $appConfig = (az webapp show -n $app -g $group --query "{java:siteConfig.javaversion,netFramework:siteConfig.netFrameworkVersion,php:siteConfig.phpVersion,python:siteConfig.pythonVersion,linux:siteConfig.linuxFxVersion}") | ConvertFrom-Json
 
     $obj = [PSCustomObject]@{
         Subscription    = $context.Subscription.Name
@@ -55,7 +60,7 @@ foreach ($app in $FunctionApps) {
         AppName         = $app.Name
         Status          = $app.Status
         OSType          = $app.OSType
-        Environment     = $app.ApplicationSettings['ASPNETCORE_ENVIRONMENT']
+        # Environment     = $app.ApplicationSettings['ASPNETCORE_ENVIRONMENT']
         Runtime         = $app.ApplicationSettings['FUNCTIONS_WORKER_RUNTIME']
         Version         = $app.ApplicationSettings['FUNCTIONS_EXTENSION_VERSION'].TrimStart("~")
     }

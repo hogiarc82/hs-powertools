@@ -51,7 +51,7 @@ foreach ($app in $FunctionApps) {
 
     # Query the web app for versions
     Write-Progress "Querying web app $app"
-    $appConfig = (az webapp show -n $app -g $group --query "{java:siteConfig.javaversion,netFramework:siteConfig.netFrameworkVersion,php:siteConfig.phpVersion,python:siteConfig.pythonVersion,linux:siteConfig.linuxFxVersion}") | ConvertFrom-Json
+    #$appConfig = (az webapp show -n $app -g $group --query "{java:siteConfig.javaversion,netFramework:siteConfig.netFrameworkVersion,php:siteConfig.phpVersion,python:siteConfig.pythonVersion,linux:siteConfig.linuxFxVersion}") | ConvertFrom-Json
 
     $obj = [PSCustomObject]@{
         Subscription    = $context.Subscription.Name
@@ -64,7 +64,7 @@ foreach ($app in $FunctionApps) {
         Runtime         = $app.ApplicationSettings['FUNCTIONS_WORKER_RUNTIME']
         Version         = $app.ApplicationSettings['FUNCTIONS_EXTENSION_VERSION'].TrimStart("~")
     }
-    $appInfo.Add($obj)
+    $appInfo.Add($obj) | Out-Null
 }
 
 # display the version information for each function app in a new window

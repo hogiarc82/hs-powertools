@@ -42,17 +42,14 @@ if ($key -ne "Y") {
 }
 # getting a list of available function apps
 Write-Host "Getting available function apps... This may take a while" -ForegroundColor Yellow
+
 try {
-    $FunctionApps = Get-AzFunctionApp    
+    $FunctionApps = Get-AzFunctionApp -SubscriptionId $context.Subscription.Id
 } catch {
     <#Do this if a terminating exception happens#>
 }
 
 $appInfo = @{}
-
-
-############## LOOP IS BROKEN AND NEEDS FIXING ###############
-
 # process the version info}mation for each function app
 foreach ($app in $FunctionApps) {
 

@@ -44,36 +44,39 @@ if ($key -ne "Y") {
 Write-Host "Getting available function apps... This may take a while" -ForegroundColor Yellow
 
 try {
-    $FunctionApps = Get-AzFunctionApp -SubscriptionId $context.Subscription.Id
 } catch {
     <#Do this if a terminating exception happens#>
 }
 
-$appInfo = @{}
 # process the version info}mation for each function app
-foreach ($app in $FunctionApps) {
+$appInfo = Get-AzFunctionApp | ForEach-Object -ThrottleLimit 2 -Parallel {
 
     # Query the web app for versions
-    Write-Progress "Querying web app: "$app.Name
+    Write-Progress "Querying web app: "$_.Name
     #$appConfig = (az webapp show -n $app -g $group --query "{java:siteConfig.javaversion,netFramework:siteConfig.netFrameworkVersion,php:siteConfig.phpVersion,python:siteConfig.pythonVersion,linux:siteConfig.linuxFxVersion}") | ConvertFrom-Json
     try {
         $obj = [PSCustomObject]@{
-            Subscription   = $context.Subscription.Name
-            AppServicePlan = $app.AppServicePlan
-            ResourceGroup  = $app.ResourceGroupName
-            AppName        = $app.Name
-            Status         = $app.Status
-            OSType         = $app.OSType
-            # Environment     = $app.ApplicationSettings['ASPNETCORE_ENVIRONMENT']
-            Runtime        = $app.ApplicationSettings['FUNCTIONS_WORKER_RUNTIME']
-            Version        = $app.ApplicationSettings['FUNCTIONS_EXTENSION_VERSION'].TrimStart("~")
+            Subscription   = $using:context.Subscription.Name
+            AppServicePlan = $_.AppServicePlan
+            ResourceGroup  = $_.ResourceGroupName
+            AppName        = $_.Name
+            Status         = $_.Status
+            OSType         = $_.OSType
+            # Environment     = $_.ApplicationSettings['ASPNETCORE_ENVIRONMENT']
+            Runtime        = $_.ApplicationSettings['FUNCTIONS_WORKER_RUNTIME']
+            Version        = $_.ApplicationSettings['FUNCTIONS_EXTENSION_VERSION'].TrimStart("~")
         }
-        $appInfo.Add($obj) | Out-Null
+        if ($obj.OSType -eq "Linux") {
+            if ($null -eq $obj.Runtime) {
+                #$obj.Runtime = "dotnet-core"
+                Write-Warning "OS type is Linux but failed to retrive runtime version"
+            }
+        }
+        Write-Host "-Processed"$obj.AppName -ForegroundColor Cyan
+        return $obj
     } catch {
-        <#Do this if a terminating exception happens#>
+        Write-Error "Fatal Error:"$_.Name
     }
-    Write-Host "- Processed "$obj.AppName -ForegroundColor Cyan
 }
-
 # display the version information for each function app in a new window
 $appInfo | Out-GridView
